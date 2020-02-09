@@ -12,14 +12,13 @@ import android.util.Log;
 
 public class mapactivity extends AppCompatActivity implements SensorEventListener {
 
+    // Globals
     private static final String tag = "Map Activity";
-
     private SensorManager sensorManager;
 
     private final ThreadLocal<Sensor> light = new ThreadLocal<>();
     private final ThreadLocal<Sensor> pressure = new ThreadLocal<>();
     private final ThreadLocal<Sensor> temperature = new ThreadLocal<>();
-
 
     private double player_latitude;
     private double player_longitude;
@@ -27,6 +26,10 @@ public class mapactivity extends AppCompatActivity implements SensorEventListene
     private float pressureVal;
     private float tempVal;
 
+    /**
+     * onCreate method to initialize all fields.
+     * @param savedInstanceState: //TODO
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,13 +120,7 @@ class Peak {
         this.lat = y;
     }
 
-    /**
-     * Haversine Formula
-     *
-     * @param latitude
-     * @param longitude
-     * @return
-     */
+
     public boolean inRange(double latitude, double longitude) {
 
         double R = 6372.8;
