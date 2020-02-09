@@ -6,7 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import com.shiblitz.unity.UnityPlayerActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
+
+    public static List<Seed> seeds;
+    public static ArrayList<Peak> peaks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
