@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':AndroidDemoWGradle'
 rootProject.name='CSCI-Group4-Shiblitz-Checkpoint2'
