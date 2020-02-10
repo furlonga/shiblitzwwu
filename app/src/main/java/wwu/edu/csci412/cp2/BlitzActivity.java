@@ -20,7 +20,6 @@ public class BlitzActivity extends AppCompatActivity {
 
     public void goToUnity(View v){
         Intent intent = new Intent(this, UnityPlayerActivity.class);
-        //intent.putExtra("arguments", "data from android");
         startActivity(intent);
     }
 }

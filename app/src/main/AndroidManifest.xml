@@ -22,6 +22,7 @@
         <activity android:name=".mapactivity"></activity>
         <activity android:name=".MenuActivity"></activity>
         <activity android:name=".BlitzActivity"></activity>
+        <activity android:name=".LoginActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
