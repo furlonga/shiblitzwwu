@@ -12,28 +12,28 @@
 
 
         <Button
-            android:id="@+id/start_button"
+            android:id="@+id/world_map_button"
             style = "@style/ButtonStyle"
             android:layout_marginBottom="425dp"
-            android:text="Start" />
+            android:text="World Map" />
 
         <Button
-            android:id="@+id/options_button"
+            android:id="@+id/account_button"
             style = "@style/ButtonStyle"
             android:layout_marginBottom="350dp"
-            android:text="Options" />
+            android:text="account" />
 
         <Button
-            android:id="@+id/quit_button"
+            android:id="@+id/blitz_button"
             style = "@style/ButtonStyle"
             android:layout_marginBottom="275dp"
-            android:text="Quit" />
+            android:text="Blitz" />
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:srcCompat="@drawable/shiba" />
+            tools:srcCompat="@drawable/warrior_dog" />
 
         <TextView
             android:id="@+id/titleView"
