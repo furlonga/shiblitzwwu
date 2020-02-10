@@ -8,13 +8,21 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
+
+import org.osmdroid.config.Configuration;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.views.MapController;
+import org.osmdroid.views.MapView;
 
 public class mapactivity extends AppCompatActivity implements SensorEventListener {
 
     // Globals
     private static final String tag = "Map Activity";
     private SensorManager sensorManager;
+
+    private MapView map = null;
 
     private final ThreadLocal<Sensor> light = new ThreadLocal<>();
     private final ThreadLocal<Sensor> pressure = new ThreadLocal<>();
@@ -33,7 +41,14 @@ public class mapactivity extends AppCompatActivity implements SensorEventListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Context ctx = getApplicationContext();
+        Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
+
         setContentView(R.layout.activity_mapactivity);
+
+        map = findViewById(R.id.map);
+        map.setTileSource(TileSourceFactory.MAPNIK);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         if (sensorManager != null) {
@@ -70,6 +85,15 @@ public class mapactivity extends AppCompatActivity implements SensorEventListene
     @Override
     public final void onAccuracyChanged(Sensor sensor, int accuracy) {
         Log.d(tag, "onAccuracyChanged: " + sensor + " accuracy: " + accuracy);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 
     private void makeSeed() {
