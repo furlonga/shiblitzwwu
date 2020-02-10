@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MenuActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -27,13 +27,14 @@
             android:id="@+id/blitz_button"
             style = "@style/ButtonStyle"
             android:layout_marginBottom="275dp"
-            android:text="Blitz" />
+            android:text="Blitz"
+            android:onClick="goToBlitz"/>
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:srcCompat="@drawable/warrior_dog" />
+            android:background="@drawable/warrior_dog" />
 
         <TextView
             android:id="@+id/titleView"

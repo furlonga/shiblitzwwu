@@ -14,26 +14,24 @@
         <Button
             android:id="@+id/start_button"
             style = "@style/ButtonStyle"
-            android:layout_marginBottom="425dp"
-            android:text="Start" />
+            android:layout_marginBottom="400dp"
+            android:text="Start"
+            android:onClick="goToMenu"/>
 
-        <Button
-            android:id="@+id/options_button"
-            style = "@style/ButtonStyle"
-            android:layout_marginBottom="350dp"
-            android:text="Options" />
+
 
         <Button
             android:id="@+id/quit_button"
             style = "@style/ButtonStyle"
-            android:layout_marginBottom="275dp"
-            android:text="Quit" />
+            android:layout_marginBottom="300dp"
+            android:text="Quit"
+            android:onClick="onDestroy"/>
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:srcCompat="@drawable/shiba" />
+            android:background="@drawable/shiba" />
 
         <TextView
             android:id="@+id/titleView"
