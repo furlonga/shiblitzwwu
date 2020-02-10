@@ -18,12 +18,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        /*
-        Intent intent = new Intent(this, UnityPlayerActivity.class);
-        intent.putExtra("arguments", "data from android");
-        startActivity(intent);
-        */
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
