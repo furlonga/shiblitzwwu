@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 
+import com.shiblitz.unity.UnityPlayerActivity;
 
 
 public class BlitzActivity extends AppCompatActivity {
@@ -18,7 +19,7 @@ public class BlitzActivity extends AppCompatActivity {
     }
 
     public void goToUnity(View v){
-        Intent myIntent = new Intent( this, UnityActivity.class);
-        this.startActivity( myIntent );
+        Intent intent = new Intent(this, UnityPlayerActivity.class);
+        startActivity(intent);
     }
 }
