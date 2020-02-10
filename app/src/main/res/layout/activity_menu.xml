@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MenuActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -12,26 +12,29 @@
 
 
         <Button
-            android:id="@+id/start_button"
+            android:id="@+id/world_map_button"
             style = "@style/ButtonStyle"
-            android:layout_marginBottom="400dp"
-            android:text="Start"
-            android:onClick="goToMenu"/>
-
-
+            android:layout_marginBottom="425dp"
+            android:text="World Map" />
 
         <Button
-            android:id="@+id/quit_button"
+            android:id="@+id/account_button"
             style = "@style/ButtonStyle"
-            android:layout_marginBottom="300dp"
-            android:text="Quit"
-            android:onClick="onDestroy"/>
+            android:layout_marginBottom="350dp"
+            android:text="account" />
+
+        <Button
+            android:id="@+id/blitz_button"
+            style = "@style/ButtonStyle"
+            android:layout_marginBottom="275dp"
+            android:text="Blitz"
+            android:onClick="goToBlitz"/>
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/shiba" />
+            android:background="@drawable/warrior_dog" />
 
         <TextView
             android:id="@+id/titleView"
