@@ -19,6 +19,11 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
     }
 
+    public void goToWorld(View v) {
+        Intent myIntent = new Intent(this, MapActivity.class);
+        this.startActivity(myIntent);
+    }
+
     public void goToBlitz(View v){
         Intent myIntent = new Intent( this, BlitzActivity.class);
         this.startActivity( myIntent );

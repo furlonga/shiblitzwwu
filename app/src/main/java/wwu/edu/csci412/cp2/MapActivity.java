@@ -1,7 +1,5 @@
 package wwu.edu.csci412.cp2;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -11,12 +9,13 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
-import org.osmdroid.views.MapController;
 import org.osmdroid.views.MapView;
 
-public class mapactivity extends AppCompatActivity implements SensorEventListener {
+public class MapActivity extends AppCompatActivity implements SensorEventListener {
 
     // Globals
     private static final String tag = "Map Activity";
@@ -107,62 +106,4 @@ public class mapactivity extends AppCompatActivity implements SensorEventListene
     }
 }
 
-class Seed {
-    private float light;
-    private float pressure;
-    private float temperature;
 
-    Seed(float light, float pressure, float temp) {
-        this.light = light;
-        this.pressure = pressure;
-        this.temperature = temp;
-    }
-
-    public float getTemperature() {
-        return temperature;
-    }
-
-    public float getPressure() {
-        return pressure;
-    }
-
-    public float getLight() {
-        return light;
-    }
-}
-
-class Peak {
-    int index;
-    int level;
-    private double lon;
-    private double lat;
-    private Seed seed;
-
-    Peak(double x, double y, Seed seed) {
-        this.seed = seed;
-        this.lon = x;
-        this.lat = y;
-    }
-
-
-    public boolean inRange(double latitude, double longitude) {
-
-        double R = 6372.8;
-
-        double dLat = Math.toRadians(latitude - this.lat);
-        double dLon = Math.toRadians(longitude - this.lon);
-
-        this.lat = Math.toRadians(this.lat);
-        latitude = Math.toRadians(latitude);
-
-        double a = Math.pow(Math.sin(dLat / 2), 2) + Math.pow(Math.sin(dLon / 2), 2) * Math.cos(this.lat) * Math.cos(latitude);
-        double c = 2 * Math.asin(Math.sqrt(a));
-
-        // Dungeons can be 3 levels, and the range gets smaller for higher difficulty.
-        return R * c < 16 - (5 * this.level);
-    }
-
-    public Seed getSeed() {
-        return seed;
-    }
-}
