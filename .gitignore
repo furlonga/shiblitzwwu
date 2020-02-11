@@ -1,1 +1,3 @@
 server/node_modules
+serverbackup/node_modules
+server/.env

@@ -1,36 +1,10 @@
+//import {saltHashPassword, checkHashPassword} from './auth';
+var auth = require('./middleware/auth');
 var mongodb = require('mongodb');
 var ObjectId = mongodb.ObjectID;
 
-var crypto = require('crypto');
 var expresponses = require('express');
 var bodyParser = require('body-parser');
-
-var genRandomString = function(length) {
-    return crypto.randomBytes(Math.ceil(length / 2))
-        .toString('hex')
-        .slice(0, length);
-}
-
-var sha512 = function(password, salt) {
-    var hash = crypto.createHmac('sha512', salt);
-    hash.update(password);
-    var value = hash.digest('hex');
-    return {
-        salt: salt,
-        passwordHash: value
-    };
-}
-
-function saltHashPassword(userPassword) {
-    var salt = genRandomString(16);
-    var passwordData = sha512(userPassword, salt);
-    return passwordData;
-}
-
-function checkHashPassword(userPassword, salt) {
-    var passwordData = sha512(userPassword, salt);
-    return passwordData;
-}
 
 //create Expresponses service
 var app = expresponses();
@@ -56,7 +30,7 @@ MongoClient.connect(url, {
             var post_data = request.body;
 
             var plain_password = post_data.password;
-            var hash_data = saltHashPassword(plain_password);
+            var hash_data = auth.saltHashPassword(plain_password);
 
             var password = hash_data.passwordHash; //save password hash
             var salt = hash_data.salt; //save salt
@@ -107,7 +81,7 @@ MongoClient.connect(url, {
                             'email': email
                         }, function(err, user) {
                             var salt = user.salt; //Get salt from user
-                            var hashed_password = checkHashPassword(userPassword, salt).passwordHash; //Get Hashed password
+                            var hashed_password = auth.checkHashPassword(userPassword, salt).passwordHash; //Get Hashed password
                             var encrypted_password = user.password; //Get password from user
                             if (hashed_password == encrypted_password) {
                                 response.json('Login Success');
