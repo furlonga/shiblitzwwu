@@ -7,11 +7,19 @@ const router = express.Router();
 router.post("/users/register", async (req, res) => {
   // Create a new user
   try {
-    const user = new User(req.body);
+    console.log("users/register endpoint");
+    const { email, name, password } = req.body;
+
+    const user = new User({ email, name, password });
+
     await user.save();
     const token = await user.generateAuthToken();
-    res.status(201).send({ user, token });
+    res.status(201).send({
+      user,
+      token
+    });
   } catch (error) {
+    console.log(error);
     res.status(400).send(error);
   }
 });
@@ -24,13 +32,19 @@ router.post("/users/login", async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findByCredentials(email, password);
     if (!user) {
-      return res
-        .status(401)
-        .send({ error: "Login failed! Check authentication credentials" });
+      return res.status(401).send({
+        error: "Login failed! Check authentication credentials"
+      });
     }
     const token = await user.generateAuthToken();
-    res.send({ user, token });
-    console.log({ user, token });
+    res.send({
+      user,
+      token
+    });
+    console.log({
+      user,
+      token
+    });
   } catch (error) {
     res.status(400).send(error);
   }
@@ -66,4 +80,3 @@ router.post("/users/me/logoutall", auth, async (req, res) => {
 });
 
 module.exports = router;
-
