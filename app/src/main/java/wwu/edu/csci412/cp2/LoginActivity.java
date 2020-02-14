@@ -14,15 +14,25 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONException;
+
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
-import wwu.edu.csci412.cp2.Retrofit.RetrofitClient;
 import wwu.edu.csci412.cp2.Retrofit.IMyService;
+
+import wwu.edu.csci412.cp2.Retrofit.RetrofitClient;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -32,6 +42,8 @@ public class LoginActivity extends AppCompatActivity {
 
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     IMyService iMyService;
+
+    Gson gson;
 
     @Override
     protected void onStop() {
@@ -43,6 +55,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
+
+        gson = new Gson();
+
 
         //Init Services
         Retrofit retrofitClient = RetrofitClient.getInstance();
@@ -108,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void registerUser(String email, String name, String password) {
-        compositeDisposable.add(iMyService.registerUser(email, name, password)
+        /*compositeDisposable.add(iMyService.registerUser(email, name, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<String>() {
@@ -119,8 +134,35 @@ public class LoginActivity extends AppCompatActivity {
                 })
         );
 
-    }
 
+         */
+        JsonObject obj = new JsonObject();
+        obj.addProperty("email", email);
+        obj.addProperty("name", name);
+        obj.addProperty("password", password);
+
+        compositeDisposable.add(iMyService.registerUser(obj)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<String>() {
+                                   @Override
+                                   public void onNext(String res) {
+                                   }
+                                   @Override
+                                   public void onError(Throwable e) {
+
+                                       Toast.makeText(LoginActivity.this, ""+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                                   }
+                                   @Override
+                                   public void onComplete() {
+                                       Toast.makeText(LoginActivity.this, "Account created. Please log in!", Toast.LENGTH_SHORT).show();
+
+                                   }
+                               }
+                ));
+
+
+    }
 
     private void loginUser(String email, String password) {
         if(TextUtils.isEmpty(email)) {
@@ -132,7 +174,12 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        compositeDisposable.add(iMyService.loginUser(email, password)
+        JsonObject obj = new JsonObject();
+        obj.addProperty("email", email);
+        obj.addProperty("password", password);
+
+/*
+        compositeDisposable.add(iMyService.loginUser(obj)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<String>() {
@@ -140,7 +187,42 @@ public class LoginActivity extends AppCompatActivity {
                     public void accept(String response) throws Exception {
                         Toast.makeText(LoginActivity.this, ""+response, Toast.LENGTH_SHORT).show();
                     }
+                    @Override
+                    public void accept(Throwable e) {
+                        Toast.makeText(LoginActivity.this, ""+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 })
         );
+
+ */
+        compositeDisposable.add(iMyService.loginUser(obj)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<String>() {
+                    @Override
+                    public void onNext(String res) {
+                        Toast.makeText(LoginActivity.this, "Successful Login", Toast.LENGTH_SHORT).show();
+                        writeObj(res);
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(LoginActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                    @Override
+                    public void onComplete() {
+                        goBack();
+                    }
+                }
+        ));
+
     }
+
+    private void goBack() {
+        this.finish();
+    }
+
+    private void writeObj(String res) {
+        User user = gson.fromJson(res, User.class);
+    }
+
 }
