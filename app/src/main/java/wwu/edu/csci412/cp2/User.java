@@ -5,7 +5,7 @@ public class User {
     private String name;
 
     private int xp;
-    private int hp;
+    private int levels;
 
     public String getEmail() {
         return email;
@@ -31,12 +31,12 @@ public class User {
         this.xp = xp;
     }
 
-    public int getHp() {
-        return hp;
+    public int getLevels() {
+        return levels;
     }
 
-    public void setHp(int hp) {
-        this.hp = hp;
+    public void setLevels(int levels) {
+        this.levels = levels;
     }
 
 }

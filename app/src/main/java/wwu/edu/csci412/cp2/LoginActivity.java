@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -18,15 +19,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONException;
-
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
@@ -202,7 +196,12 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onNext(String res) {
                         Toast.makeText(LoginActivity.this, "Successful Login", Toast.LENGTH_SHORT).show();
-                        writeObj(res);
+                        Player temp = writeObj(res);
+                        Log.d("temp",temp.getEmail().getValue());
+                        Log.d("temp",temp.getName().getValue());
+                        Log.d("temp",temp.getLevels().getValue());
+                        Log.d("temp",temp.getXp().getValue());
+
                     }
                     @Override
                     public void onError(Throwable e) {
@@ -221,8 +220,17 @@ public class LoginActivity extends AppCompatActivity {
         this.finish();
     }
 
-    private void writeObj(String res) {
+    private Player writeObj(String res) {
         User user = gson.fromJson(res, User.class);
+
+        Parameter email = new Parameter("email", user.getEmail());
+        Parameter name = new Parameter("name", user.getName());
+        Parameter levels = new Parameter("levels", Integer.toString(user.getLevels()));
+        Parameter xp = new Parameter("xp", Integer.toString(user.getXp()));
+
+        Player player = new Player(email, name, levels, xp);
+
+        return player;
     }
 
 }
