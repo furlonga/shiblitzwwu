@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: artifacts:AndroidDemoWGradle:unspecified@jar">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/AndroidDemoWGradle/build/.transforms/2914df8964ca4a1bc65e5f161c113f59/AndroidDemoWGradle/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/AndroidDemoWGradle/build/.transforms/2914df8964ca4a1bc65e5f161c113f59/AndroidDemoWGradle/res" />
-      <root url="jar://$PROJECT_DIR$/AndroidDemoWGradle/build/.transforms/2914df8964ca4a1bc65e5f161c113f59/AndroidDemoWGradle/jars/libs/unity-classes.jar!/" />
+      <root url="jar://$PROJECT_DIR$/AndroidDemoWGradle/build/.transforms/21a360cbee3850a11627af10b77f6161/AndroidDemoWGradle/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/AndroidDemoWGradle/build/.transforms/21a360cbee3850a11627af10b77f6161/AndroidDemoWGradle/res" />
+      <root url="jar://$PROJECT_DIR$/AndroidDemoWGradle/build/.transforms/21a360cbee3850a11627af10b77f6161/AndroidDemoWGradle/jars/libs/unity-classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CSCI-Group4-Shiblitz-Checkpoint2</string>
+    <string name="claim_seed">Claim Seed</string>
 </resources>

@@ -12,34 +12,58 @@
         android:orientation="horizontal">
 
 
-        <Button
-            android:id="@+id/start_button"
-            style = "@style/ButtonStyle"
-            android:layout_marginBottom="400dp"
-            android:text="Start"
-            android:onClick="goToMenu"/>
-
-
-
-        <Button
-            android:id="@+id/quit_button"
-            style = "@style/ButtonStyle"
-            android:layout_marginBottom="300dp"
-            android:text="Quit"
-            android:onClick="onDestroy"/>
-
-        <ImageView
-            android:id="@+id/background"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/background" />
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/title"
-            android:layout_width="fill_parent"
-            android:layout_height="138dp"
-            android:layout_marginTop="10dp"
-            app:srcCompat="@drawable/title" />
+            <ImageView
+                android:id="@+id/background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/background"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="-231dp" />
+
+            <Button
+                android:id="@+id/start_button"
+                style="@style/ButtonStyle"
+                android:background="@drawable/button"
+                android:onClick="goToMenu"
+                android:text="Start"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/background"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.418" />
+
+            <Button
+                android:id="@+id/quit_button"
+                style="@style/ButtonStyle"
+                android:background="@drawable/button"
+                android:onClick="onDestroy"
+                android:text="Quit"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/background"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/background"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.638" />
+
+            <ImageView
+                android:id="@+id/title"
+                android:layout_width="fill_parent"
+                android:layout_height="138dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                app:layout_constraintEnd_toEndOf="@+id/imageView"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imageView"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/title" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </RelativeLayout>

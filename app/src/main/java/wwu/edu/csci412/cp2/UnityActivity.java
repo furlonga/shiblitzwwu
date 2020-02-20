@@ -13,13 +13,22 @@ public class UnityActivity extends UnityPlayerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //mUnityPlayer = new UnityPlayerActivity();
         Intent intent = new Intent(this, UnityPlayerActivity.class);
-        //intent.putExtra("arguments", "data from android");
+        intent.putExtra("Health", "100");
+        intent.putExtra("Mana", "100");
+        intent.putExtra("Items", "ID NUM");
+
         startActivity(intent);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_unity);
 
     }
+    public void sendMessage(){
+
+    }
+
 
     public void onBackPressed()
     {
