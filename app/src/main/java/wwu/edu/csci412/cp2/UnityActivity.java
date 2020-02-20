@@ -15,9 +15,9 @@ public class UnityActivity extends UnityPlayerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         //mUnityPlayer = new UnityPlayerActivity();
         Intent intent = new Intent(this, UnityPlayerActivity.class);
-        intent.putExtra("Health", "100");
-        intent.putExtra("Mana", "100");
-        intent.putExtra("Items", "ID NUM");
+        //intent.putExtra("Health", "100");
+        //intent.putExtra("Mana", "100");
+        intent.putExtra("arguments", "ID NUM, 100, 100");
 
         startActivity(intent);
 
