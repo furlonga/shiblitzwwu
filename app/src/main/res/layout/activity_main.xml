@@ -17,8 +17,9 @@
             style = "@style/ButtonStyle"
             android:layout_marginBottom="400dp"
             android:text="Start"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/button"
             android:onClick="goToMenu"/>
-
 
 
         <Button
@@ -26,6 +27,8 @@
             style = "@style/ButtonStyle"
             android:layout_marginBottom="300dp"
             android:text="Quit"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/button"
             android:onClick="onDestroy"/>
 
         <ImageView

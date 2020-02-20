@@ -28,4 +28,10 @@ public class MenuActivity extends AppCompatActivity {
         Intent myIntent = new Intent( this, BlitzActivity.class);
         this.startActivity( myIntent );
     }
+
+    public void goToLogin(View v){
+        Intent myIntent = new Intent( this, LoginActivity.class);
+        this.startActivity( myIntent );
+    }
+
 }
