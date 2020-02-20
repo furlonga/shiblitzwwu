@@ -87,6 +87,7 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         if (sensorManager != null) {
+            Log.d(tag, "Registering Sensors");
             light.set(sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT));
             pressure.set(sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE));
             temperature.set(sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE));
@@ -170,6 +171,7 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
     @Override
     protected void onResume() {
         super.onResume();
+
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -190,6 +192,7 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
     }
     @Override
     public void onSensorChanged(SensorEvent event) {
+        Log.d(tag, "Sensor Event");
         if (event.sensor.getType() == Sensor.TYPE_LIGHT) {
             lightVal = event.values[0];
             Log.d(tag, "light: " + lightVal);
@@ -232,6 +235,7 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
 
     public void makeSeed(View view) {
         Log.d(tag, "Light= "+ lightVal + "pressure= "+ pressureVal + "temp= "+ tempVal);
+
         for (Peak peak : MainActivity.peaks) {
             if (peak.inRange(player_latitude, player_longitude)) {
                 MainActivity.seeds.add(peak.getSeed());
@@ -239,6 +243,9 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
             }
         }
         MainActivity.seeds.add(new Seed(lightVal, pressureVal, tempVal));
+        for (Seed seed : MainActivity.seeds){
+            Log.d(tag, "Seed found");
+        }
     }
 }
 
