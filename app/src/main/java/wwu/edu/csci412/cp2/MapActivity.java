@@ -31,19 +31,19 @@ import org.osmdroid.views.MapView;
 /* MapActivity is part of shiblitz's MVC controller. It allows users to create dungeon spawn seeds
  * based off of a number of important variables.
  *
- * 	Temperature: 	The temperature gathered informs the ratio of enemy types from 
+ * 	Temperature: 	The temperature gathered informs the ratio of enemy types from
  * 			point dense at low temperature to point thin on high temperatures.
  * 			point density refers to the composition of levels. Point dense means
- * 			expensive, powerful units. Point light generations are full of slimes.	
- * 		
+ * 			expensive, powerful units. Point light generations are full of slimes.
+ *
  * 	Pressure:	Pressure dictates the size of the room. High pressure, small maps. Low
- * 			pressure, large map. Going higher gets you a longer, more intense 
+ * 			pressure, large map. Going higher gets you a longer, more intense
  * 			generation. Philosophy here is to incentivize harder seeds as
- * 			"more game".:	
+ * 			"more game".:
  *
  * 	Light:		Light informs the direct difficulty and reward of the map. I'm not sure about
  * 			This one, as it motivates people to be adventuring during low light levels
- * 			and I don't want people to be hurt.i	
+ * 			and I don't want people to be hurt.i
  *
  * 	Location:	The location of the player does not usually matter, but since this game	relies
  * 			on the GPS, it's most efficient to just check if the player is within x radius
@@ -61,7 +61,7 @@ import org.osmdroid.views.MapView;
  */
 public class MapActivity extends AppCompatActivity implements SensorEventListener, LocationListener {
 
-	
+
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private static final String tag = "Map Activity";
 
@@ -88,6 +88,7 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
         super.onCreate(savedInstanceState);
 
         Context ctx = getApplicationContext();
+
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
         Log.d(tag, "Entering onCreate");
 
@@ -95,6 +96,7 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
         provider = lm.getBestProvider(new Criteria(), false);
 
         setContentView(R.layout.activity_mapactivity);
+
         map = findViewById(R.id.map);
         map.setTileSource(TileSourceFactory.MAPNIK);
 
@@ -104,10 +106,13 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
 
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-        assert location != null;
-        Log.d(tag, "acquiring coords");
 
-        player_longitude= location.getLongitude();
+        Log.d(tag, "acquiring coords");
+        if (location == null) {
+            Log.d(tag, "null location");
+            return;
+        }
+        player_longitude = location.getLongitude();
         player_latitude = location.getLatitude();
 
         Log.d(tag, "lat=" + player_latitude + "lon=" + player_longitude);
@@ -183,7 +188,7 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
                             Manifest.permission.ACCESS_FINE_LOCATION)
                             == PackageManager.PERMISSION_GRANTED) {
                         //Request location updates:
-                        if (lm == null || provider ==null) {
+                        if (lm == null || provider == null) {
                             Log.d(tag, "Null");
                         }
                         lm.requestLocationUpdates(provider, 400, 1, this);
@@ -219,6 +224,7 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
             lm.removeUpdates(this);
         }
     }
+
     @Override
     public void onSensorChanged(SensorEvent event) {
         Log.d(tag, "Sensor Event");
@@ -246,6 +252,7 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
         player_longitude = location.getLongitude();
         player_latitude = location.getLatitude();
     }
+
     //TODO
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -260,7 +267,7 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
     }
 
     public void makeSeed(View view) {
-        Log.d(tag, "Light= "+ lightVal + "pressure= "+ pressureVal + "temp= "+ tempVal);
+        Log.d(tag, "Light= " + lightVal + "pressure= " + pressureVal + "temp= " + tempVal);
 
         for (Peak peak : MainActivity.peaks) {
             if (peak.inRange(player_latitude, player_longitude)) {
@@ -269,7 +276,7 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
             }
         }
         MainActivity.seeds.add(new Seed(lightVal, pressureVal, tempVal));
-        for (Seed seed : MainActivity.seeds){
+        for (Seed seed : MainActivity.seeds) {
             Log.d(tag, "Seed found");
         }
     }
