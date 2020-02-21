@@ -1,12 +1,10 @@
 server/node_modules
-<<<<<<< HEAD
 serverbackup/node_modules
 server/.env
-=======
+
 
 # Built application files
 *.apk
-*.aar
 *.ap_
 *.aab
 
@@ -89,4 +87,3 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
->>>>>>> 40d6f8507cab52e368dc0ea8ff5ab9e7ff44b228
