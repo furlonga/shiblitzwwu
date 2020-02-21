@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Data for the Map Activity
     public static ArrayList<Seed> seeds = new ArrayList<>();
     public static ArrayList<Peak> peaks = new ArrayList<>();
 
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    //Go to the menu Activity
     public void goToMenu( View v ) {
         Intent myIntent = new Intent( this, MenuActivity.class);
         this.overridePendingTransition(R.anim.leftright,
