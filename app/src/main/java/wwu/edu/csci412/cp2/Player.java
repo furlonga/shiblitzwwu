@@ -9,10 +9,6 @@ public class Player {
     private Parameter levels;
     private Parameter xp;
 
-    //private Parameter health;
-
-    //private Parameter mana;
-    //private Parameter item;
 
     public Player(Parameter email, Parameter name, Parameter levels, Parameter xp) {
         this.email = email;
@@ -56,8 +52,4 @@ public class Player {
     }
 
 
-
-    Player(){
-
-    }
 }

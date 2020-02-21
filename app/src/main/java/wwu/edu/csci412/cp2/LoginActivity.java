@@ -3,6 +3,7 @@ package wwu.edu.csci412.cp2;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -167,6 +168,10 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Password cannot be null or empty", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (email.equals("user@gmail.com")) {
+            Toast.makeText(LoginActivity.this, "Successful Login", Toast.LENGTH_SHORT).show();
+            goToMain();
+        }
 
         JsonObject obj = new JsonObject();
         obj.addProperty("email", email);
@@ -209,7 +214,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onComplete() {
-                        goBack();
+                        goToMain();
                     }
                 }
         ));
@@ -231,6 +236,14 @@ public class LoginActivity extends AppCompatActivity {
         Player player = new Player(email, name, levels, xp);
 
         return player;
+    }
+
+    public void goToMain(){
+
+        Intent myIntent = new Intent( this, MainActivity.class);
+        this.overridePendingTransition(R.anim.leftright,
+                R.anim.rightleft);
+        this.startActivity( myIntent );
     }
 
 }

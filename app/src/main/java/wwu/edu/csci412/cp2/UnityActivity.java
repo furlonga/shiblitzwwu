@@ -13,11 +13,12 @@ public class UnityActivity extends UnityPlayerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //mUnityPlayer = new UnityPlayerActivity();
+        //TODO: Fully implement Message passing with the Unity Activity
+        //Start Unity Activity
         Intent intent = new Intent(this, UnityPlayerActivity.class);
-        intent.putExtra("Health", "100");
-        intent.putExtra("Mana", "100");
-        intent.putExtra("Items", "ID NUM");
+        //intent.putExtra("Health", "100");
+        //intent.putExtra("Mana", "100");
+        intent.putExtra("arguments", "ID NUM, 100, 100");
 
         startActivity(intent);
 
@@ -25,11 +26,8 @@ public class UnityActivity extends UnityPlayerActivity {
         setContentView(R.layout.activity_unity);
 
     }
-    public void sendMessage(){
 
-    }
-
-
+    //This class is needed so that Users do not leave the Unity Activity until it is fully finished
     public void onBackPressed()
     {
         // instead of calling UnityPlayerActivity.onBackPressed() we just ignore the back button event
