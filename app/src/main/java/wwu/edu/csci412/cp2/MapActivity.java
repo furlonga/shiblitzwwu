@@ -28,8 +28,40 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
+/* MapActivity is part of shiblitz's MVC controller. It allows users to create dungeon spawn seeds
+ * based off of a number of important variables.
+ *
+ * 	Temperature: 	The temperature gathered informs the ratio of enemy types from 
+ * 			point dense at low temperature to point thin on high temperatures.
+ * 			point density refers to the composition of levels. Point dense means
+ * 			expensive, powerful units. Point light generations are full of slimes.	
+ * 		
+ * 	Pressure:	Pressure dictates the size of the room. High pressure, small maps. Low
+ * 			pressure, large map. Going higher gets you a longer, more intense 
+ * 			generation. Philosophy here is to incentivize harder seeds as
+ * 			"more game".:	
+ *
+ * 	Light:		Light informs the direct difficulty and reward of the map. I'm not sure about
+ * 			This one, as it motivates people to be adventuring during low light levels
+ * 			and I don't want people to be hurt.i	
+ *
+ * 	Location:	The location of the player does not usually matter, but since this game	relies
+ * 			on the GPS, it's most efficient to just check if the player is within x radius
+ * 			of a given peak. Additionally, this lets us web scrape for locations of peaks and
+ * 			automatically create them, were we to scale.
+ *
+ *
+ * The class implements both SensorEventListener and LocationListener, signifying that we will be
+ * looking at all of the aforementioned variables.
+ *
+ * Class is currently messy.
+ * TODO: Clean and refactor the codebase.
+ *
+ * FIXME: Apparent bug.
+ */
 public class MapActivity extends AppCompatActivity implements SensorEventListener, LocationListener {
 
+	
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private static final String tag = "Map Activity";
 
@@ -96,6 +128,8 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
             System.exit(1);
         }
     }
+
+    //Example from git
     public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
@@ -212,7 +246,7 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
         player_longitude = location.getLongitude();
         player_latitude = location.getLatitude();
     }
-
+    //TODO
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
     }
