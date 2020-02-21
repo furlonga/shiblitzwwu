@@ -73,11 +73,11 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
         assert location != null;
-
         Log.d(tag, "acquiring coords");
 
         player_longitude= location.getLongitude();
         player_latitude = location.getLatitude();
+
         Log.d(tag, "lat=" + player_latitude + "lon=" + player_longitude);
 
         GeoPoint p = new GeoPoint(player_latitude, player_longitude);
@@ -96,8 +96,6 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
             System.exit(1);
         }
     }
-
-
     public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
@@ -124,8 +122,6 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
                         })
                         .create()
                         .show();
-
-
             } else {
                 // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(this,
@@ -164,7 +160,6 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
                 }
                 return;
             }
-
         }
     }
 
@@ -220,17 +215,14 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-
     }
 
     @Override
     public void onProviderEnabled(String provider) {
-
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-
     }
 
     public void makeSeed(View view) {
