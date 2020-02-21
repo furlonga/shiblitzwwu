@@ -104,8 +104,11 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
 
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-        assert location != null;
+
         Log.d(tag, "acquiring coords");
+        if (location == null) {
+            return;
+        }
 
         player_longitude= location.getLongitude();
         player_latitude = location.getLatitude();
