@@ -10,7 +10,11 @@ router.post("/users/register", async (req, res) => {
     console.log("users/register endpoint");
     const { email, name, password } = req.body;
 
-    const user = new User({ email, name, password });
+    const user = new User({
+      email,
+      name,
+      password
+    });
 
     await user.save();
     const token = await user.generateAuthToken();
@@ -41,6 +45,31 @@ router.post("/users/login", async (req, res) => {
     console.log({
       user
     });
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+router.post("/users/modify", async (req, res) => {
+  // Modify user levels and xp
+  try {
+    console.log("users/modify endpoint");
+    var email = req.body.email;
+    const user = await User.findByEmail(email);
+    if (!user) {
+      return res.status(400).send({
+        error: "Invalid Email"
+      });
+    }
+    if (req.body.levels) {
+      user.levels = req.body.levels;
+    }
+    if (req.body.xp) {
+      user.xp = req.body.xp;
+    }
+
+    await user.save();
+    res.sendStatus(200);
   } catch (error) {
     res.status(400).send(error);
   }

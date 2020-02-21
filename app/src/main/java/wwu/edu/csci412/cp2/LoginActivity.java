@@ -71,6 +71,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //Create account pop-up
         txt_create_account = (TextView) findViewById(R.id.txt_create_account);
         txt_create_account.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,19 +119,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void registerUser(String email, String name, String password) {
-        /*compositeDisposable.add(iMyService.registerUser(email, name, password)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String response) throws Exception {
-                        Toast.makeText(LoginActivity.this, ""+response, Toast.LENGTH_SHORT).show();
-                    }
-                })
-        );
-
-
-         */
+        //Turns primitive into json object
         JsonObject obj = new JsonObject();
         obj.addProperty("email", email);
         obj.addProperty("name", name);
@@ -173,27 +162,12 @@ public class LoginActivity extends AppCompatActivity {
             goToMain();
         }
 
+        //Turn primitives into json object
         JsonObject obj = new JsonObject();
         obj.addProperty("email", email);
         obj.addProperty("password", password);
 
-/*
-        compositeDisposable.add(iMyService.loginUser(obj)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String response) throws Exception {
-                        Toast.makeText(LoginActivity.this, ""+response, Toast.LENGTH_SHORT).show();
-                    }
-                    @Override
-                    public void accept(Throwable e) {
-                        Toast.makeText(LoginActivity.this, ""+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                })
-        );
 
- */
         compositeDisposable.add(iMyService.loginUser(obj)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -226,6 +200,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private Player writeObj(String res) {
+        //Turn json response from server to intermediate class to convert into Player(Parameter) class
         User user = gson.fromJson(res, User.class);
 
         Parameter email = new Parameter("email", user.getEmail());
@@ -239,7 +214,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void goToMain(){
-
         Intent myIntent = new Intent( this, MainActivity.class);
         this.overridePendingTransition(R.anim.leftright,
                 R.anim.rightleft);
