@@ -18,6 +18,7 @@ public class BlitzActivity extends AppCompatActivity {
         setContentView(R.layout.activity_blitz);
     }
 
+    //Go to the Unity project
     public void goToUnity(View v){
         Intent intent = new Intent(this, UnityPlayerActivity.class);
         startActivity(intent);

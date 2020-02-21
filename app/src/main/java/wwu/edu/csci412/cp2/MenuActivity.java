@@ -19,6 +19,7 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
     }
 
+    //Go to the Map Activity
     public void goToWorld(View v) {
         Intent myIntent = new Intent(this, MapActivity.class);
         this.overridePendingTransition(R.anim.leftright,
@@ -26,6 +27,7 @@ public class MenuActivity extends AppCompatActivity {
         this.startActivity(myIntent);
     }
 
+    //Go to the Blitz Activity/Equipment Screen
     public void goToBlitz(View v){
         Intent myIntent = new Intent( this, BlitzActivity.class);
         this.overridePendingTransition(R.anim.leftright,
@@ -33,6 +35,7 @@ public class MenuActivity extends AppCompatActivity {
         this.startActivity( myIntent );
     }
 
+    //Change Users from the DataBase
     public void goToLogin(View v){
         Intent myIntent = new Intent( this, LoginActivity.class);
         this.overridePendingTransition(R.anim.leftright,
