@@ -239,7 +239,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void goToMain(){
+
         Intent myIntent = new Intent( this, MainActivity.class);
+        this.overridePendingTransition(R.anim.leftright,
+                R.anim.rightleft);
         this.startActivity( myIntent );
     }
 

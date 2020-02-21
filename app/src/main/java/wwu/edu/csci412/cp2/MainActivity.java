@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToMenu( View v ) {
         Intent myIntent = new Intent( this, MenuActivity.class);
+        this.overridePendingTransition(R.anim.leftright,
+                R.anim.rightleft);
         this.startActivity( myIntent );
     }
 
