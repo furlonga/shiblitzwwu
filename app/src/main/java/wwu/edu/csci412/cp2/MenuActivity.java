@@ -6,6 +6,8 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.shiblitz.unity.UnityPlayerActivity;
+
 public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +38,12 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     //Change Users from the DataBase
-    public void goToLogin(View v){
-        Intent myIntent = new Intent( this, LoginActivity.class);
+    public void goToUnity(View v){
+        Intent intent = new Intent(this, UnityPlayerActivity.class);
+        startActivity(intent);
         this.overridePendingTransition(R.anim.leftright,
                 R.anim.rightleft);
-        this.startActivity( myIntent );
+
     }
 
 }
