@@ -38,6 +38,8 @@ public class LoginActivity extends AppCompatActivity {
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     IMyService iMyService;
 
+    public static User user;
+
     Gson gson;
 
     @Override
@@ -53,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
 
         gson = new Gson();
 
+        user = new User(this);
 
         //Init Services
         Retrofit retrofitClient = RetrofitClient.getInstance();
@@ -175,11 +178,15 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onNext(String res) {
                         Toast.makeText(LoginActivity.this, "Successful Login", Toast.LENGTH_SHORT).show();
-                        Player temp = writeObj(res);
+                        //User temp = writeObj(res);
+                        updateUserObject(res);
+                        /*
                         Log.d("temp",temp.getEmail().getValue());
                         Log.d("temp",temp.getName().getValue());
                         Log.d("temp",temp.getLevels().getValue());
                         Log.d("temp",temp.getXp().getValue());
+
+                         */
 
                     }
                     @Override
@@ -195,22 +202,28 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    public void updateUserObject(String res) {
+        User userOverwrite = gson.fromJson(res, User.class);
+
+        user.setEmail(userOverwrite.getEmail());
+        user.setName(userOverwrite.getName());
+        user.setLevels(userOverwrite.getLevels());
+        user.setXp(userOverwrite.getXp());
+
+        user.setPreferences(this);
+
+    }
+
     private void goBack() {
         this.finish();
     }
 
-    private Player writeObj(String res) {
+    private User writeObj(String res) {
         //Turn json response from server to intermediate class to convert into Player(Parameter) class
         User user = gson.fromJson(res, User.class);
 
-        Parameter email = new Parameter("email", user.getEmail());
-        Parameter name = new Parameter("name", user.getName());
-        Parameter levels = new Parameter("levels", Integer.toString(user.getLevels()));
-        Parameter xp = new Parameter("xp", Integer.toString(user.getXp()));
-
-        Player player = new Player(email, name, levels, xp);
-
-        return player;
+        //Log.d("user", user.getEmail() + user.getEmailParameter().getValue());
+        return user;
     }
 
     public void goToMain(){
