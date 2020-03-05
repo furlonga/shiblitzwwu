@@ -16,8 +16,6 @@ public class UnityActivity extends UnityPlayerActivity {
         //TODO: Fully implement Message passing with the Unity Activity
         //Start Unity Activity
         Intent intent = new Intent(this, UnityPlayerActivity.class);
-        //intent.putExtra("Health", "100");
-        //intent.putExtra("Mana", "100");
         intent.putExtra("arguments", "ID NUM, 100, 100");
 
         startActivity(intent);

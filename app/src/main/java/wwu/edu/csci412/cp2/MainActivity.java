@@ -21,9 +21,10 @@ public class MainActivity extends AppCompatActivity {
     //Go to the menu Activity
     public void goToMenu( View v ) {
         Intent myIntent = new Intent( this, MenuActivity.class);
+
+        this.startActivity( myIntent );
         this.overridePendingTransition(R.anim.leftright,
                 R.anim.rightleft);
-        this.startActivity( myIntent );
     }
 
     public void onDestroy(View v){
