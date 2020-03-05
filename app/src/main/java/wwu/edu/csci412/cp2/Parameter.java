@@ -9,6 +9,8 @@ package wwu.edu.csci412.cp2;
 
 
 public class Parameter {
+
+
     private String id;
     private String value;
 
@@ -25,4 +27,11 @@ public class Parameter {
         return this.value;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
 }
