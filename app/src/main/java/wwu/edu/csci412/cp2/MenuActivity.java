@@ -6,6 +6,8 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.shiblitz.unity.UnityPlayerActivity;
+
 public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,25 +24,26 @@ public class MenuActivity extends AppCompatActivity {
     //Go to the Map Activity
     public void goToWorld(View v) {
         Intent myIntent = new Intent(this, MapActivity.class);
+        this.startActivity(myIntent);
         this.overridePendingTransition(R.anim.leftright,
                 R.anim.rightleft);
-        this.startActivity(myIntent);
     }
 
     //Go to the Blitz Activity/Equipment Screen
     public void goToBlitz(View v){
         Intent myIntent = new Intent( this, BlitzActivity.class);
+        this.startActivity( myIntent );
         this.overridePendingTransition(R.anim.leftright,
                 R.anim.rightleft);
-        this.startActivity( myIntent );
     }
 
-    //Change Users from the DataBase
-    public void goToLogin(View v){
-        Intent myIntent = new Intent( this, LoginActivity.class);
-        this.overridePendingTransition(R.anim.leftright,
-                R.anim.rightleft);
-        this.startActivity( myIntent );
+    //Go to Main Activity
+    public void goBack(View v){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        this.overridePendingTransition(R.anim.goback,
+                R.anim.goback2);
+
     }
 
 }

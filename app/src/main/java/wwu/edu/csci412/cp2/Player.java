@@ -2,7 +2,6 @@ package wwu.edu.csci412.cp2;
 
 public class Player {
 
-
     private Parameter email;
     private Parameter name;
 
