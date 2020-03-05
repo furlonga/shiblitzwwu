@@ -24,25 +24,25 @@ public class MenuActivity extends AppCompatActivity {
     //Go to the Map Activity
     public void goToWorld(View v) {
         Intent myIntent = new Intent(this, MapActivity.class);
+        this.startActivity(myIntent);
         this.overridePendingTransition(R.anim.leftright,
                 R.anim.rightleft);
-        this.startActivity(myIntent);
     }
 
     //Go to the Blitz Activity/Equipment Screen
     public void goToBlitz(View v){
         Intent myIntent = new Intent( this, BlitzActivity.class);
+        this.startActivity( myIntent );
         this.overridePendingTransition(R.anim.leftright,
                 R.anim.rightleft);
-        this.startActivity( myIntent );
     }
 
-    //Change Users from the DataBase
-    public void goToUnity(View v){
-        Intent intent = new Intent(this, UnityPlayerActivity.class);
+    //Go to Main Activity
+    public void goBack(View v){
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-        this.overridePendingTransition(R.anim.leftright,
-                R.anim.rightleft);
+        this.overridePendingTransition(R.anim.goback,
+                R.anim.goback2);
 
     }
 
