@@ -42,7 +42,7 @@
                 android:id="@+id/quit_button"
                 style="@style/ButtonStyle"
                 android:background="@drawable/button"
-                android:onClick="onDestroy"
+                android:onClick="quit"
                 android:text="Quit"
                 android:textColor="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"

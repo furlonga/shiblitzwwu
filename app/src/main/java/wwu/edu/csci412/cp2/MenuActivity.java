@@ -25,8 +25,8 @@ public class MenuActivity extends AppCompatActivity {
     public void goToWorld(View v) {
         Intent myIntent = new Intent(this, MapActivity.class);
         this.startActivity(myIntent);
-        this.overridePendingTransition(R.anim.leftright,
-                R.anim.rightleft);
+        this.overridePendingTransition(R.anim.goup,
+                R.anim.goup2);
     }
 
     //Go to the Blitz Activity/Equipment Screen
