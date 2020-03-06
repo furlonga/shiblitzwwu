@@ -54,9 +54,8 @@ public class ShiblitzPlayer : Character
     {
         setPosition(position);
         Door d = Game.getDungeon().getDoor(position);
-        if (d != null){
+        if (d != null)
             d.open();
-        }
     }
     public void setPosition(Vector2Int position)
     {

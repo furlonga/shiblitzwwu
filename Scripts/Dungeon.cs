@@ -40,15 +40,40 @@ public class Dungeon
         carveOutCorridors(); // Corridors are full of wall tiles at this point, we need to add floor tiles such that they connect the sectors they share doors with
     }
 
-    public void spawnEnemies()
+      public void spawnEnemies(double mean, double deviation)
     {
-        foreach(DungeonSector sector in sectors)
-        {
-            if(sector.type != DungeonSector.TYPE.FILLED)
+        List<DungeonSector> tempSectors = sectors.FindAll(delegate(DungeonSector ds)
             {
-                sector.spawnMonsters();
-            }
+                return ds.type != DungeonSector.TYPE.FILLED;
+            });
+            
+        //sort the rooms by roomsize and order top down.
+        tempSectors.Sort((sector1, sector2)=> sector1.volume.CompareTo(sector2.volume));
+        tempSectors.Reverse();
+
+        List<DungeonSector> enemySectors = new List<DungeonSector>();
+        List<double> values = new List<double>();
+
+        System.Random r = new System.Random();
+        for (int i = 0; i < (int) (tempSectors.Count * .66); i++) 
+        {
+            double random = NextGaussianDouble(r);
+            random *= deviation;
+            random += mean;
+
+            values.Add(random);
+            enemySectors.Add(tempSectors[i]);
         }
+
+        values.Sort((double1, double2)=> double1.CompareTo(double2));
+        enemySectors.Sort((sector1, sector2)=> sector1.distance.CompareTo(sector2.distance));
+
+        for (int i = 0; i < (int) (tempSectors.Count * .66); i++) 
+        {
+            enemySectors[i].spawnMonsters((int) values[i]);
+            //Debug.Log(values[i] + " " + enemySectors[i].distance);
+        }
+
     }
 
     // Calls makeCorridors() on all filled sectors
@@ -355,5 +380,23 @@ public class Dungeon
     public void showBasicMovementLocations()
     {
 
+    }
+
+    //https://stackoverflow.com/questions/5817490/implementing-box-mueller-random-number-generator-in-c-sharp
+
+    public double NextGaussianDouble(System.Random r)
+    {
+    double u, v, S;
+
+    do
+    {
+        u = 2.0 * r.NextDouble() - 1.0;
+        v = 2.0 * r.NextDouble() - 1.0;
+        S = u * u + v * v;
+    }
+    while (S >= 1.0);
+
+    double fac = Math.Sqrt(-2.0 * Math.Log(S) / S);
+    return u * fac;
     }
 }

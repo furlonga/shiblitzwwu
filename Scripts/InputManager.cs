@@ -50,17 +50,10 @@ public class InputManager {
             {
                 if (v == touchLocation)
                 {
-                    if(selectedMove.isCantrip){
-                        selectedMove.setCastLocation(v);
-                        selectedMove.performMove();
-                        clearInputChoices();
-                    }
-                    else {
-                        selectedMove.setCastLocation(v);
-                        Game.QueueMove(selectedMove);
-                        clearInputChoices();
-                        Game.finishState(Game.State.GETTING_PLAYER_INPUT);
-                    }
+                    selectedMove.setCastLocation(v);
+                    Game.QueueMove(selectedMove);
+                    clearInputChoices();
+                    Game.finishState(Game.State.GETTING_PLAYER_INPUT);
                 }
             }
         }

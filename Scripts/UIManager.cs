@@ -38,11 +38,11 @@ public class UIManager
 
     public void clickedLeftCard()
     {
-        Game.getInputManager().selectMove(new CardinalOneSquare(Game.getPlayer()));
+        Game.getInputManager().selectMove(new KingMove(Game.getPlayer()));
     }
     public void clickedCenterCard()
     {
-        Game.getInputManager().selectMove(new ThrowFireball(Game.getPlayer()));
+        Game.getInputManager().selectMove(new StabMove(Game.getPlayer()));
     }
     public void clickedRightCard()
     {

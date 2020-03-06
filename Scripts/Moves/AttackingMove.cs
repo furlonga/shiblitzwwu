@@ -1,10 +1,12 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class LocationChangingMove : ShiblitzMove
+public abstract class AttackingMove : ShiblitzMove
 {
-    public LocationChangingMove(Character caster) :base(caster) { }
+    public List<Vector2Int> AffectedTiles;
+
+    public AttackingMove(Character caster) :base(caster) { }
     public override void setCastLocation(Vector2Int location )
     {
         base.setCastLocation(location);

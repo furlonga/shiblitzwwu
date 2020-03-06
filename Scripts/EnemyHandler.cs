@@ -33,6 +33,9 @@ public class EnemyHandler
             case Enemy.TYPE.SKELLINGTON:
                 enemy = new Skellington(location);
                 break;
+                case Enemy.TYPE.WEREWOLF:
+                enemy = new Wolf(location);
+                break;
             default:
                 enemy = new Slime(location);
                 break;
@@ -51,16 +54,4 @@ public class EnemyHandler
         }
         return aggroed;
     }
-
-    public void tick() {
-        int i = 0;
-        while (i < enemies.Count && i >= 0){
-            Spell s = Game.getSpellManager().getSpell(enemies[i].position);
-            if(s != null){
-                if(enemies[i].takeDamage(s.damage))
-                    i--;
-            }
-            i++;
-        }
-    }
-}   
+}

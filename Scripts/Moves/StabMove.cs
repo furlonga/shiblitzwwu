@@ -1,10 +1,10 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KingMove : LocationChangingMove
+public class StabMove : AttackingMove
 {
-    public KingMove(Character c) : base(c) { }
+    public StabMove(Character c) : base(c) { }
 
     public override List<Vector2Int> getCastableLocations(Vector2Int casterLocation)
     {
@@ -23,7 +23,18 @@ public class KingMove : LocationChangingMove
 
     public override void performMove()
     {
+        AffectedTiles = new List<Vector2Int>();
+        Vector2Int difference = castLocation - caster.position;
+        difference = castLocation + difference;
+        AffectedTiles.Add(castLocation);
+        AffectedTiles.Add(difference);
         base.performMove();
-        caster.moveTo(castLocation);
+
+        foreach (Vector2Int vec in AffectedTiles) {
+            Enemy enemy = Game.getEnemyHandler().getEnemy(vec);
+            if (enemy != null) {
+                enemy.health = enemy.health - caster.damage;
+            }
+        }
     }
 }
