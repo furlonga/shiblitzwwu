@@ -3,6 +3,7 @@ package wwu.edu.csci412.cp2;
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -275,6 +276,15 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
         for (Seed seed : MainActivity.seeds){
             Log.d(tag, "Seed found");
         }
+    }
+
+    //Go to Main Activity
+    public void goBack(View v){
+        Intent intent = new Intent(this, MenuActivity.class);
+        startActivity(intent);
+        this.overridePendingTransition(R.anim.godown,
+                R.anim.godown2);
+
     }
 }
 
