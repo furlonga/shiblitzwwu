@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 public class DungeonBoard
 {
     public Tilemap board;
+    public Tilemap spells;
     public Tilemap gui;
     public List<Vector2Int> occupiedSpaces;
 
@@ -13,7 +14,8 @@ public class DungeonBoard
     {
         GameObject g = (GameObject) GameObject.Instantiate(Resources.Load("Grid"));
         board = g.transform.GetChild(0).GetComponent<Tilemap>();
-        gui = g.transform.GetChild(1).GetComponent<Tilemap>();
+        spells = g.transform.GetChild(1).GetComponent<Tilemap>();
+        gui = g.transform.GetChild(2).GetComponent<Tilemap>();
         occupiedSpaces = new List<Vector2Int>();
     }
     

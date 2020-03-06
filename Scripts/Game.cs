@@ -16,6 +16,7 @@ public class Game
     private CameraController camera;
     private InputManager inputManager;
     private UIManager uiManager;
+    private SpellManager spellManager;
 
     private List<ShiblitzMove> queuedMoves;
     private int moveQueuePointer = 0;
@@ -44,6 +45,7 @@ public class Game
         inputManager = new InputManager();
         inputTimer = GameObject.Find("InputTimer").GetComponent<Slider>();
         uiManager = new UIManager();
+        spellManager = new SpellManager();
     }
 
     public static void attachPlayer(ShiblitzPlayer p)
@@ -87,14 +89,14 @@ public class Game
     {
         return instance.inputManager;
     }
+    public static SpellManager getSpellManager() {
+        return instance.spellManager;
+    }
 
     public void Start()
     {
-        //seeds for enemy distribution
-        double mu = 5.0;
-        double sigma = 10;
         instance.dungeonBoard.showFogOfWar();
-        instance.dungeon.spawnEnemies(mu, sigma);
+        instance.dungeon.spawnEnemies();
         DungeonSector startingSector = instance.dungeon.getSector(new Vector2Int(1, 1));
         startingSector.reveal();
         camera.panAndZoomTo(startingSector);
@@ -106,7 +108,13 @@ public class Game
     {
         switch (state)
         {
-            case State.ROUND_START:
+            case State.ROUND_START:       
+                Game.getSpellManager().tick();
+                Game.getEnemyHandler().tick();
+                Spell s = Game.getSpellManager().getSpell(Game.getPlayer().position);
+                if(s!= null) {
+                    Game.getPlayer().takeDamage(s.damage);
+                }
                 Game.getDungeonBoard().occupiedSpaces = new List<Vector2Int>();
                 timeInFixedFrames = 0;
                 //inputManager.selectMove(new GodMove(Game.getPlayer()));
@@ -183,7 +191,7 @@ public class Game
                 case State.GETTING_PLAYER_INPUT:
                     instance.state = State.PERFORMING_ACTIONS;
                     instance.queuedMoves.Sort(delegate (ShiblitzMove m1, ShiblitzMove m2) { return m2.speed - m1.speed; });
-                    getInputManager().clearInputChoices();
+                    getInputManager().clearInputChoices(); 
                     break;
                 case State.PERFORMING_ACTIONS:
                     instance.state = State.ROUND_START;
@@ -194,7 +202,7 @@ public class Game
                             getPlayer().health--;
                         }
                     }
-                    Game.getPlayer().mana++;
+                    Game.getPlayer().gainMana(1);
                     getUIManager().reflectPlayerStats();
                     break;
                 case State.ROUND_START:

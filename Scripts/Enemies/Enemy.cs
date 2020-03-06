@@ -6,7 +6,7 @@ using System;
 public class Enemy : Character
 {
     public static GameObject slime = (GameObject)Resources.Load("Enemies/Slime");
-    public static GameObject werewolf = (GameObject)Resources.Load("Enemies/Werewolf");
+    public static GameObject werewolf = (GameObject)Resources.Load("Enemies/Slime");
     public static GameObject skellington = (GameObject)Resources.Load("Enemies/Skellington");
     
     public bool aggroed = false;
@@ -20,7 +20,7 @@ public class Enemy : Character
 
     }
 
-    public void queueMove()
+    public virtual void queueMove()
     {
         ShiblitzMove move = moves[UnityEngine.Random.Range(0, moves.Count)];
         List<Vector2Int> possibleMoves = move.getCastableLocations(position);

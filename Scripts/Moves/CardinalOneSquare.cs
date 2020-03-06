@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CardinalOneSquare : LocationChangingMove
 {
-    public CardinalOneSquare(Character caster) : base(caster) { speed = 8; }
+    public CardinalOneSquare(Character caster) : base(caster) { speed = 8; isCantrip = true; }
 
     public override List<Vector2Int> getCastableLocations(Vector2Int casterLocation)
     {
