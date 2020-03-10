@@ -75,18 +75,19 @@ public class BlitzActivity extends AppCompatActivity {
     //Go to the Unity project
     public void goToUnity(View v){
         Intent intent = new Intent(this, UnityPlayerActivity.class);
+        //Pass initial parameters to unity
         User user = LoginActivity.user;
         Parameter email = user.getEmailParameter();
         Parameter name = user.getNameParameter();
         Parameter xp = user.getXpParameter();
         Parameter levels = user.getLevelsParameter();
-        /*
+
         intent.putExtra(email.getId(), email.getValue());
         intent.putExtra(name.getId(), name.getValue());
         intent.putExtra(xp.getId(), xp.getValue());
         intent.putExtra(levels.getId(),levels.getValue());
 
-           */
+
         String sharedPreferenceName = this.getPackageName();
 
         SharedPreferences sharedPreferences = getSharedPreferences(sharedPreferenceName, MODE_PRIVATE);
