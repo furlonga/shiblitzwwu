@@ -15,6 +15,7 @@ public class ShiblitzTile
     public static TileBase bonusTile = (TileBase)Resources.Load("Tiles/GreenTileWithBorder");
 
     public static TileBase inputHighlight = (TileBase)Resources.Load("Tiles/InputTileHighlight");
+    public static TileBase inputHighlightCantrip = (TileBase)Resources.Load("Tiles/InputTileHighlightCantrip");
     public static TileBase enemyInputHighlight = (TileBase)Resources.Load("Tiles/EnemyInputTileHighlight");
 
     public TYPE type;

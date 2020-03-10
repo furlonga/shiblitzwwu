@@ -17,6 +17,7 @@ public class Game
     private InputManager inputManager;
     private UIManager uiManager;
     private SpellManager spellManager;
+    private DeckManager deckManager;
 
     private List<ShiblitzMove> queuedMoves;
     private int moveQueuePointer = 0;
@@ -38,6 +39,7 @@ public class Game
 
     public Game()
     {
+        deckManager = new DeckManager();
         enemyHandler = new EnemyHandler();
         dungeonBoard = new DungeonBoard();
         dungeon = new Dungeon(new Seed());
@@ -54,7 +56,11 @@ public class Game
         instance.player.setPosition(new Vector2Int(1, 1));
         instance.uiManager.setMaxStats();
         instance.uiManager.reflectPlayerStats();
-
+        getUIManager().setInitialCards();
+    }
+    public static DeckManager getDeckManager()
+    {
+        return instance.deckManager;
     }
     public static DungeonBoard getDungeonBoard()
     {
@@ -95,8 +101,13 @@ public class Game
 
     public void Start()
     {
+        //TODO: These are the coefficients for enemy difficulty. 
+        //        Sigma: Range of enemies allowed.
+        //        Points value to center around.
+        double mu = 5.0;
+        double sigma = 10;
         instance.dungeonBoard.showFogOfWar();
-        instance.dungeon.spawnEnemies();
+        instance.dungeon.spawnEnemies(mu, sigma);
         DungeonSector startingSector = instance.dungeon.getSector(new Vector2Int(1, 1));
         startingSector.reveal();
         camera.panAndZoomTo(startingSector);
@@ -106,18 +117,17 @@ public class Game
 
     public void update()
     {
+        if(Game.getPlayer().health <= 0) {
+            GameObject.Destroy(Game.getPlayer().gameObject);
+            return;
+        }
         switch (state)
         {
             case State.ROUND_START:       
                 Game.getSpellManager().tick();
                 Game.getEnemyHandler().tick();
-                Spell s = Game.getSpellManager().getSpell(Game.getPlayer().position);
-                if(s!= null) {
-                    Game.getPlayer().takeDamage(s.damage);
-                }
                 Game.getDungeonBoard().occupiedSpaces = new List<Vector2Int>();
                 timeInFixedFrames = 0;
-                //inputManager.selectMove(new GodMove(Game.getPlayer()));
                 foreach (Enemy e in enemyHandler.getAggroedEnemies())
                 {
                     e.queueMove();
@@ -125,6 +135,8 @@ public class Game
                 finishState(State.ROUND_START);
                 break;
             case State.GETTING_PLAYER_INPUT:
+                if(inputManager.selectedMove == null)
+                    inputManager.selectCard(UIManager.Card.LEFT);
                 inputTimer.value = ((300.0f - timeInFixedFrames) / 300);
                 if (timeInFixedFrames > 300)
                     finishState(State.GETTING_PLAYER_INPUT);

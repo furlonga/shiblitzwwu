@@ -14,6 +14,8 @@ public class DungeonSector
     public Vector2Int size;
     public List<Neighbor> neighbors;
     public TYPE type;
+    public int volume;
+    public double distance;
     public bool revealed = false;
     public Dungeon dungeon;
     private List<Enemy> enemies;
@@ -25,7 +27,10 @@ public class DungeonSector
 
         this.position = position;
         this.size = size;
-        
+       
+        this.volume = size.x * size.y;
+        this.distance = Math.Pow( Math.Pow(position.x - 1, 2) + Math.Pow(position.y -1 ,2),   0.5 );
+
         setType(type);
     }
 
@@ -325,23 +330,26 @@ public class DungeonSector
         paint(Game.getDungeonBoard().board);
     }
 
-    public List<Enemy> spawnMonsters()
+    public List<Enemy> spawnMonsters(int value)
     {
+        //test block for enemy values
+
+        int wolf = 12;
+        int skellington = 5;
+        int slime = 2;
+
         if (position.x == 1 && position.y == 1)
             return new List<Enemy>();
-        int maxEnemies = 2 + size.x * size.y / 15;
-        int number = UnityEngine.Random.Range(0, maxEnemies);
-        Debug.Log("Rolled " + number + " enemies (out of " + maxEnemies + " possible) for sector " + position + " (size " + size.x + " x " + size.y + " = " + size.x * size.y + ")");
+
         if(size.x < 3 || size.y < 3)
         {
             return new List<Enemy>();
         }
-        if (number >= (size.x - 1)  * (size.y - 1))
-            number = (size.x - 1) * (size.y - 1) -1;
+
         List<Enemy> enemyList = new List<Enemy>();
         List<Vector2Int> filledSpaces = new List<Vector2Int>();
-        for (int i = 0; i < number; i++)
-        {
+        
+        while (value > 0) {
             Vector2Int roomLocation = new Vector2Int(UnityEngine.Random.Range(0, size.x), UnityEngine.Random.Range(0, size.y));
             while (filledSpaces.Contains(roomLocation))
             {
@@ -349,11 +357,22 @@ public class DungeonSector
             }
             filledSpaces.Add(roomLocation);
             Vector2Int spawnLocation = sectorToDungeonCoordinates(roomLocation);
+        
             Enemy.TYPE type = Enemy.TYPE.SLIME;
-            if(UnityEngine.Random.value > 0.7f)
-            {
+            
+            if ( value > wolf) {
+                Debug.Log("Spawning wolf");
+                type = Enemy.TYPE.WEREWOLF;
+                value -= wolf;
+            } else if ( value > skellington) {
+                Debug.Log("Spawning skellington");
                 type = Enemy.TYPE.SKELLINGTON;
+                value -= skellington;
+            } else {
+                Debug.Log("Spawning slime");
+                value -= slime;
             }
+
             Enemy e = Game.getEnemyHandler().spawnEnemy(type, spawnLocation);
             enemies.Add(e);
         }

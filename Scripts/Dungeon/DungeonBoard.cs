@@ -8,6 +8,7 @@ public class DungeonBoard
     public Tilemap board;
     public Tilemap spells;
     public Tilemap gui;
+    public Tilemap enemygui;
     public List<Vector2Int> occupiedSpaces;
 
     public DungeonBoard()
@@ -16,6 +17,7 @@ public class DungeonBoard
         board = g.transform.GetChild(0).GetComponent<Tilemap>();
         spells = g.transform.GetChild(1).GetComponent<Tilemap>();
         gui = g.transform.GetChild(2).GetComponent<Tilemap>();
+        enemygui = g.transform.GetChild(3).GetComponent<Tilemap>();
         occupiedSpaces = new List<Vector2Int>();
     }
     

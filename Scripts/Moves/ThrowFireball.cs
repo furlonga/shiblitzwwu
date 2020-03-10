@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class ThrowFireball : SpellMove
 {
+
+    GameObject impact;
     public ThrowFireball(Character caster) : base(caster)
     {
         manaCost = 5;
+        speed = 25;
     }
 
     public override void performMove() {
@@ -16,10 +19,14 @@ public class ThrowFireball : SpellMove
         foreach (Vector2Int v in cardinals) {
             
             if(validLocation(v + castLocation)) {
-                aoe.Add(v + castLocation);
+                aoe.Add(new Vector2Int(v.x + castLocation.x, v.y + castLocation.y));
             }
 
         }
-        Game.getSpellManager().castSpell(Spell.Type.FIREBALL, castLocation,  aoe);
+        impact = Game.getSpellManager().castSpell(Spell.Type.FIREBALL, castLocation,  aoe);
+    }
+
+    public override bool isFinished(){
+        return impact == null;
     }
 }

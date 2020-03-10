@@ -29,12 +29,13 @@ public abstract class Character
             health = maxHealth;
     }
 
-    public bool takeDamage(int damage) {
+    public virtual bool takeDamage(int damage) {
         Debug.Log("someone took damage!");
         health -= damage;
         if(this is Enemy){
             if(health <= 0){
                 Game.getEnemyHandler().enemies.Remove((Enemy)this);
+                Game.getEnemyHandler().getAggroedEnemies().Remove((Enemy)this);
                 GameObject.Destroy(gameObject);
                 return true;
             }
@@ -43,6 +44,7 @@ public abstract class Character
             Game.getUIManager().reflectPlayerStats();
             if(health <=0){
                 Debug.Log("Player died!!");
+                GameObject.Destroy(gameObject);
             }
         }
         return false;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class EnemyHandler
 {
@@ -33,6 +34,9 @@ public class EnemyHandler
             case Enemy.TYPE.SKELLINGTON:
                 enemy = new Skellington(location);
                 break;
+            case Enemy.TYPE.WEREWOLF:
+                enemy = new Wolf(location);
+                break;
             default:
                 enemy = new Slime(location);
                 break;
@@ -53,14 +57,11 @@ public class EnemyHandler
     }
 
     public void tick() {
-        int i = 0;
-        while (i < enemies.Count && i >= 0){
-            Spell s = Game.getSpellManager().getSpell(enemies[i].position);
-            if(s != null){
-                if(enemies[i].takeDamage(s.damage))
-                    i--;
-            }
-            i++;
+        if (enemies.Count <= 0)
+        {
+            GameObject g = GameObject.Find("WinText");
+            if (g != null)
+                g.GetComponent<TextMeshProUGUI>().alpha = 1;
         }
     }
 }   

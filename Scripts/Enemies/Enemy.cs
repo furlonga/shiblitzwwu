@@ -8,7 +8,10 @@ public class Enemy : Character
     public static GameObject slime = (GameObject)Resources.Load("Enemies/Slime");
     public static GameObject werewolf = (GameObject)Resources.Load("Enemies/Slime");
     public static GameObject skellington = (GameObject)Resources.Load("Enemies/Skellington");
-    
+
+
+    private StatsBarsController statsbars;
+
     public bool aggroed = false;
     
     public List<ShiblitzMove> moves = new List<ShiblitzMove>();
@@ -17,7 +20,7 @@ public class Enemy : Character
 
     public Enemy()
     {
-
+        statsbars = ((GameObject)GameObject.Instantiate(Resources.Load("UI/StatsBars"), GameObject.Find("Canvas").transform)).GetComponent<StatsBarsController>();
     }
 
     public virtual void queueMove()
@@ -32,7 +35,7 @@ public class Enemy : Character
                 if (Vector2Int.Distance(v, Game.getPlayer().position) < Vector2Int.Distance(moveLocation, Game.getPlayer().position))
                     moveLocation = v;
             }
-            Game.getDungeonBoard().gui.SetTile((Vector3Int)moveLocation, ShiblitzTile.enemyInputHighlight);
+            Game.getDungeonBoard().enemygui.SetTile((Vector3Int)moveLocation, ShiblitzTile.enemyInputHighlight);
             move.setCastLocation(moveLocation);
             Game.QueueMove(move);
         }
@@ -41,7 +44,7 @@ public class Enemy : Character
     public override void moveTo(Vector2Int position)
     {
         setPosition(position);
-        Game.getDungeonBoard().gui.SetTile((Vector3Int)position, null);
+        Game.getDungeonBoard().enemygui.SetTile((Vector3Int)position, null);
     }
 
     public void setPosition(Vector2Int position)
@@ -55,10 +58,24 @@ public class Enemy : Character
         Color c = gameObject.GetComponent<SpriteRenderer>().color;
         c.a = 1;
         gameObject.GetComponent<SpriteRenderer>().color = c;
+        statsbars.gameObject.SetActive(true);
+        statsbars.setTarget(this);
+        statsbars.setMaxHealth(maxHealth);
+        statsbars.setMaxMana(maxMana);
+        statsbars.setHealth(health);
+        statsbars.setMana(mana);
     }
 
     public void aggro()
     {
         aggroed = true;
+    }
+
+    public override bool takeDamage(int damage)
+    {
+        bool returnValue = base.takeDamage(damage);
+        statsbars.setHealth(health);
+        statsbars.setMana(mana);
+        return returnValue;
     }
 }

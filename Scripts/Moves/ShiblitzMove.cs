@@ -17,7 +17,7 @@ public abstract class ShiblitzMove
     protected Character caster;
     protected Vector2Int castLocation;
     protected State state;
-    private float timeStarted;
+    protected float timeStarted;
     public int speed = 10;
     public int manaCost = 0;
     public bool isCantrip = false;
@@ -38,7 +38,7 @@ public abstract class ShiblitzMove
         caster.mana -= manaCost;
     }
 
-    public bool isFinished()
+    public virtual bool isFinished()
     {
         return Time.time - timeStarted > .15f;
     }
