@@ -7,11 +7,8 @@ import android.content.Intent;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-<<<<<<< HEAD
 import android.util.Log;
-=======
 import android.preference.PreferenceManager;
->>>>>>> c6f3875945939f17f588b708cd2de05def93ac28
 import android.view.Menu;
 import android.view.View;
 import android.view.animation.Animation;
