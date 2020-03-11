@@ -7,7 +7,11 @@ import android.content.Intent;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.util.Log;
+=======
+import android.preference.PreferenceManager;
+>>>>>>> c6f3875945939f17f588b708cd2de05def93ac28
 import android.view.Menu;
 import android.view.View;
 import android.view.animation.Animation;
@@ -118,20 +122,22 @@ public class BlitzActivity extends AppCompatActivity {
     //Go to the Unity project
     public void goToUnity(View v){
         Intent intent = new Intent(this, UnityPlayerActivity.class);
+        //Pass initial parameters to unity
         User user = LoginActivity.user;
         Parameter email = user.getEmailParameter();
         Parameter name = user.getNameParameter();
         Parameter xp = user.getXpParameter();
         Parameter levels = user.getLevelsParameter();
-        /*
+
         intent.putExtra(email.getId(), email.getValue());
         intent.putExtra(name.getId(), name.getValue());
         intent.putExtra(xp.getId(), xp.getValue());
         intent.putExtra(levels.getId(),levels.getValue());
 
-           */
+
         String sharedPreferenceName = this.getPackageName();
-        SharedPreferences sharedPreferences = this.getSharedPreferences(sharedPreferenceName, MODE_PRIVATE);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(sharedPreferenceName, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString(email.getId(), email.getValue());
