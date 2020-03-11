@@ -18,16 +18,28 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Retrofit;
+import wwu.edu.csci412.cp2.Retrofit.IMyService;
+import wwu.edu.csci412.cp2.Retrofit.RetrofitClient;
 
 /* MapActivity is part of shiblitz's MVC controller. It allows users to create dungeon spawn seeds
  * based off of a number of important variables.
@@ -84,6 +96,11 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
     private float pressureVal;
     private float tempVal;
 
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
+    IMyService iMyService;
+    Gson gson;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +108,13 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
         Context ctx = getApplicationContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
         Log.d(tag, "Entering onCreate");
+
+        gson = new Gson();
+
+        //Init Services
+        Retrofit retrofitClient = RetrofitClient.getInstance();
+        iMyService = retrofitClient.create(IMyService.class);
+
 
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         provider = lm.getBestProvider(new Criteria(), false);
@@ -132,6 +156,8 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
             System.exit(1);
         }
     }
+
+
 
     //Example from git
     public boolean checkLocationPermission() {
@@ -269,13 +295,74 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
         for (Peak peak : MainActivity.peaks) {
             if (peak.inRange(player_latitude, player_longitude)) {
                 MainActivity.seeds.add(peak.getSeed());
+                registerSeed(peak.getSeed().getLight(), peak.getSeed().getPressure(), peak.getSeed().getTemperature());
                 return;
             }
         }
         MainActivity.seeds.add(new Seed(lightVal, pressureVal, tempVal));
+        registerSeed(lightVal, pressureVal, tempVal);
         for (Seed seed : MainActivity.seeds){
             Log.d(tag, "Seed found");
         }
+    }
+    private void registerSeed(float light, float pressure, float temp) {
+        //Turns primitive into json object
+        JsonObject userModify = new JsonObject();
+
+        User user = LoginActivity.user;
+
+        JsonObject seed = new JsonObject();
+        seed.addProperty("light", light);
+        seed.addProperty("pressure", pressure);
+        seed.addProperty("temp", temp);
+
+        userModify.addProperty("email", user.getEmail());
+        userModify.add("seeds", seed);
+
+        Log.d("json", userModify.toString());
+
+        compositeDisposable.add(iMyService.modifyUser(userModify)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<String>() {
+                                   @Override
+                                   public void onNext(String res) {
+                                   }
+                                   @Override
+                                   public void onError(Throwable e) {
+
+                                       Toast.makeText(MapActivity.this, ""+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                                   }
+                                   @Override
+                                   public void onComplete() {
+                                       Toast.makeText(MapActivity.this, "Add seed!", Toast.LENGTH_SHORT).show();
+
+                                   }
+                               }
+                ));
+
+        compositeDisposable.add(iMyService.getInfo(user.getEmail())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<String>() {
+                    @Override
+                    public void onNext(String res) {
+                        Toast.makeText(MapActivity.this, res, Toast.LENGTH_SHORT);
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                }
+                ));
+
+
     }
 
     //Go to Main Activity

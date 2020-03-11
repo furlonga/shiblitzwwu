@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const Double = require('mongoose-double')(mongoose);
 
 const userSchema = mongoose.Schema({
   name: {
@@ -41,6 +42,23 @@ const userSchema = mongoose.Schema({
     max: 255,
     default: 1
   },
+  seeds: [
+    {
+      light: {
+        type: Double,
+        require: true
+      },
+      pressure: {
+        type: Double,
+        required: true
+      },
+      temp: {
+        type: Double,
+        required: true
+      }
+
+    }
+  ],
   tokens: [
     {
       token: {
