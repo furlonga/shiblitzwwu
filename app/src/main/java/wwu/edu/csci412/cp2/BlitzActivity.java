@@ -7,6 +7,7 @@ import android.content.Intent;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.animation.Animation;
@@ -15,20 +16,42 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.shiblitz.unity.UnityPlayerActivity;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Retrofit;
+import wwu.edu.csci412.cp2.Retrofit.IMyService;
+import wwu.edu.csci412.cp2.Retrofit.RetrofitClient;
 
 
 public class BlitzActivity extends AppCompatActivity {
 
+
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
+    IMyService iMyService;
+    Gson gson;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        gson = new Gson();
+
+        //Init Services
+        Retrofit retrofitClient = RetrofitClient.getInstance();
+        iMyService = retrofitClient.create(IMyService.class);
 
 
 
         setContentView(R.layout.activity_blitz);
         updateView();
+
 
 
     }
@@ -59,7 +82,28 @@ public class BlitzActivity extends AppCompatActivity {
         progressBar.setProgress(Integer.parseInt(xp.getValue()) * 10);
 
 
+        compositeDisposable.add(iMyService.getInfo(user.getEmail())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<String>() {
+                                   @Override
+                                   public void onNext(String res) {
+                                       Toast.makeText(BlitzActivity.this, res, Toast.LENGTH_SHORT);
+                                       Log.d("here", res);
 
+                                   }
+
+                                   @Override
+                                   public void onError(Throwable e) {
+                                       Toast.makeText(BlitzActivity.this, ""+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+
+                                   }
+
+                                   @Override
+                                   public void onComplete() {
+                                   }
+                               }
+                ));
 
     }
 

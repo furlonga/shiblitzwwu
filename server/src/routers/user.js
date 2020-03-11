@@ -67,6 +67,10 @@ router.post("/users/modify", async (req, res) => {
     if (req.body.xp) {
       user.xp = req.body.xp;
     }
+    
+    if (req.body.seeds) {
+      user.seeds = user.seeds.concat(req.body.seeds);
+    }
 
     await user.save();
     res.sendStatus(200);
@@ -75,9 +79,25 @@ router.post("/users/modify", async (req, res) => {
   }
 });
 
-router.get("/users/me", auth, async (req, res) => {
+router.get("/users/:email", async (req, res) => {
   // View logged in user profile
-  res.send(req.user);
+//  res.send(req.user);
+  try {
+    console.log("users/me endpoint");
+    var email = req.param("email");
+    console.log(email);
+    const user = await User.findByEmail(email);
+    if (!user) {
+      return res.status(400).send({
+        error: "Invalid Email"
+      });
+    }
+    console.log(user);
+    res.send(user);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+
 });
 
 router.post("/users/me/logout", auth, async (req, res) => {
