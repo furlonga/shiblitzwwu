@@ -7,4 +7,6 @@ Shiblitz is a rogue like dungeon crawler that uses your real world position to g
 
 In Shiblitz, you play as a Shiba Inu on a quest to kill monsters. Current features include GPS location, OSM integration, Sensor based map generation, and moves selected from a shuffled deck of cards.
 
+<img src="https://i.imgur.com/hqnpd1o.png" alt="alt text" width="100">
+
 Contributors: Jacob Coffland, Kevin Doan, Albert Furlong, Trevor Yokoyama
