@@ -51,7 +51,7 @@ router.post("/users/login", async (req, res) => {
 });
 
 router.post("/users/modify", async (req, res) => {
-  // Modify user levels and xp
+  // Modify user levels and xp and seeds
   try {
     console.log("users/modify endpoint");
     var email = req.body.email;
@@ -101,8 +101,7 @@ router.get("/users/:email", async (req, res) => {
 });
 
 router.get("/users/seeds/:email", async (req, res) => {
-  // View logged in user profile
-//  res.send(req.user);
+  // View logged in user profile's seed
   try {
     console.log("users/seeds endpoint");
     var email = req.param("email");
