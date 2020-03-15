@@ -7,6 +7,7 @@ import android.content.Intent;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.View;
@@ -16,20 +17,45 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.shiblitz.unity.UnityPlayerActivity;
+
+import java.util.ArrayList;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Retrofit;
+import wwu.edu.csci412.cp2.Retrofit.IMyService;
+import wwu.edu.csci412.cp2.Retrofit.RetrofitClient;
 
 
 public class BlitzActivity extends AppCompatActivity {
 
+
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
+    IMyService iMyService;
+    Gson gson;
+
+    public Seed[] seeds;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        gson = new Gson();
 
+        //Init Services
+        Retrofit retrofitClient = RetrofitClient.getInstance();
+        iMyService = retrofitClient.create(IMyService.class);
 
 
         setContentView(R.layout.activity_blitz);
         updateView();
+
 
 
     }
@@ -55,12 +81,52 @@ public class BlitzActivity extends AppCompatActivity {
         int level = Integer.parseInt(levels.getValue());
         manaView.setText("Mana: " + Integer.toString(10 + level));
         agilityView.setText("Agility: "+ Integer.toString(10 + level));
-        healthView.setText("Health" + Integer.toString(10 + level));
+        healthView.setText("Health: " + Integer.toString(10 + level));
 
         progressBar.setProgress(Integer.parseInt(xp.getValue()) * 10);
 
 
+        compositeDisposable.add(iMyService.getSeeds(user.getEmail())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<String>() {
+                                   @Override
+                                   public void onNext(String res) {
+                                       Log.d("here", res);
+                                       updateSeedList(res);
+                                   }
 
+                                   @Override
+                                   public void onError(Throwable e) {
+                                       Toast.makeText(BlitzActivity.this, ""+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+
+                                   }
+
+                                   @Override
+                                   public void onComplete() {
+                                       TextView seedView = findViewById(R.id.seed_view);
+                                       seedView.setText("Seeds: " + seeds.length);
+                                       Log.d("SEED LENGTH",Integer.toString( seeds.length));
+                                       Log.d("SEED 0", Float.toString(seeds[0].getTemperature()));
+                                   }
+                               }
+                ));
+
+
+
+
+    }
+
+
+    public void updateSeedList(String res) {
+        /*User userOverwrite = gson.fromJson(res, User.class);
+        user.setEmail(userOverwrite.getEmail());
+        user.setName(userOverwrite.getName());
+        user.setLevels(userOverwrite.getLevels());
+        user.setXp(userOverwrite.getXp());
+        user.setPreferences(this); */
+        seeds = gson.fromJson(res, Seed[].class);
+        Log.d("seed0", Float.toString(seeds[0].getLight()));
 
     }
 
@@ -74,6 +140,7 @@ public class BlitzActivity extends AppCompatActivity {
 
     //Go to the Unity project
     public void goToUnity(View v){
+        /*
         Intent intent = new Intent(this, UnityPlayerActivity.class);
         //Pass initial parameters to unity
         User user = LoginActivity.user;
@@ -97,8 +164,12 @@ public class BlitzActivity extends AppCompatActivity {
         editor.putString(name.getId(), name.getValue());
         editor.putString(xp.getId(), xp.getValue());
         editor.putString(levels.getId(), levels.getValue());
-
+        //seeds[seeds.length - 1] = null;
+        Log.d("Intent value", xp.getValue());
         editor.apply();
+        //startActivity(intent);
+          */
+        Intent intent = new Intent(this, UnityActivity.class);
         startActivity(intent);
         this.overridePendingTransition(R.anim.godown, R.anim.godown2);
     }
