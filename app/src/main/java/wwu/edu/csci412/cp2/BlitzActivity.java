@@ -22,6 +22,8 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.shiblitz.unity.UnityPlayerActivity;
 
+import java.util.ArrayList;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
@@ -37,6 +39,8 @@ public class BlitzActivity extends AppCompatActivity {
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     IMyService iMyService;
     Gson gson;
+
+    //public static ArrayList<Seed> seeds = new ArrayList<>();
 
 
     @Override
@@ -83,15 +87,15 @@ public class BlitzActivity extends AppCompatActivity {
         progressBar.setProgress(Integer.parseInt(xp.getValue()) * 10);
 
 
-        compositeDisposable.add(iMyService.getInfo(user.getEmail())
+        compositeDisposable.add(iMyService.getSeeds(user.getEmail())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<String>() {
                                    @Override
                                    public void onNext(String res) {
-                                       Toast.makeText(BlitzActivity.this, res, Toast.LENGTH_SHORT);
+                                       Toast.makeText(BlitzActivity.this, res, Toast.LENGTH_SHORT).show();
                                        Log.d("here", res);
-
+                                        updateSeedList(res);
                                    }
 
                                    @Override
@@ -102,9 +106,26 @@ public class BlitzActivity extends AppCompatActivity {
 
                                    @Override
                                    public void onComplete() {
+
                                    }
                                }
                 ));
+
+
+    }
+
+
+    public void updateSeedList(String res) {
+        /*User userOverwrite = gson.fromJson(res, User.class);
+
+        user.setEmail(userOverwrite.getEmail());
+        user.setName(userOverwrite.getName());
+        user.setLevels(userOverwrite.getLevels());
+        user.setXp(userOverwrite.getXp());
+
+        user.setPreferences(this); */
+        Seed[] seeds = gson.fromJson(res, Seed[].class);
+        Log.d("seed0", Float.toString(seeds[0].getLight()));
 
     }
 
