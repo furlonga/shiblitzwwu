@@ -40,3 +40,4 @@ public interface IMyService {
             @Path("email") String email
     );
 }
+

@@ -22,8 +22,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.shiblitz.unity.UnityPlayerActivity;
 
-import java.util.ArrayList;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
@@ -86,7 +84,9 @@ public class BlitzActivity extends AppCompatActivity {
         progressBar.setProgress(Integer.parseInt(xp.getValue()) * 10);
 
 
+
         compositeDisposable.add(iMyService.getSeeds(user.getEmail())
+
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<String>() {
