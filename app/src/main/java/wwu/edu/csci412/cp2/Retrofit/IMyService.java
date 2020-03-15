@@ -1,3 +1,4 @@
+
 package wwu.edu.csci412.cp2.Retrofit;
 
 import com.google.gson.JsonObject;
@@ -33,4 +34,10 @@ public interface IMyService {
             @Path("email") String email
     );
 
+    @Headers("Content-Type: application/json")
+    @GET("users/seeds/{email}")
+    Observable<String> getSeeds(
+            @Path("email") String email
+    );
 }
+

@@ -24,6 +24,7 @@
         <activity android:name=".MenuActivity"></activity>
         <activity android:name=".BlitzActivity"></activity>
         <activity android:name=".MainActivity"></activity>
+        <activity android:name=".UnityActivity"></activity>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,6 +36,7 @@
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale|layoutDirection|density"
             android:name="com.shiblitz.unity.UnityPlayerActivity">
             <meta-data android:name="unityplayer.UnityActivity" android:value="true" />
+            <meta-data android:name="unityplayer.ForwardNativeEventsToDalvik" android:value="false"/>
         </activity>
     </application>
 </manifest>
