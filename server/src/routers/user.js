@@ -100,6 +100,27 @@ router.get("/users/:email", async (req, res) => {
 
 });
 
+router.get("/users/seeds/:email", async (req, res) => {
+  // View logged in user profile
+//  res.send(req.user);
+  try {
+    console.log("users/seeds endpoint");
+    var email = req.param("email");
+    console.log(email);
+    const user = await User.findByEmail(email);
+    if (!user) {
+      return res.status(400).send({
+        error: "Invalid Email"
+      });
+    }
+    console.log(user);
+    res.send(user.seeds);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+
+});
+
 router.post("/users/me/logout", auth, async (req, res) => {
   // Log user out of the application
   try {
