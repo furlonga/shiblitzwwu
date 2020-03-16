@@ -36,21 +36,7 @@
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.418" />
-
-            <Button
-                android:id="@+id/quit_button"
-                style="@style/ButtonStyle"
-                android:background="@drawable/button"
-                android:onClick="quit"
-                android:text="Quit"
-                android:textColor="@color/colorPrimary"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/background"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="@+id/background"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.638" />
+                app:layout_constraintVertical_bias="0.522" />
 
             <ImageView
                 android:id="@+id/title"

@@ -60,10 +60,11 @@ public class UnityActivity extends UnityPlayerActivity {
         return name.getValue();
     }
 
-    static void updatePlayer(String level, String xp){
+    public void updatePlayer(Object[] arr){
         User user = LoginActivity.user;
-        user.setLevels(Integer.parseInt(level));
-        user.setXp(Integer.parseInt(xp));
+        user.setLevels(Integer.parseInt((String) arr[0]));
+        user.setXp(Integer.parseInt((String) arr[1]));
+        finish();
     }
 
 
