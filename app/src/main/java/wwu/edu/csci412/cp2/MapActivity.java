@@ -14,6 +14,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -370,6 +371,9 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
     public void goBack(View v){
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
+        mp.setVolume(1.0f, 1.0f);
+        mp.start();
         this.overridePendingTransition(R.anim.godown,
                 R.anim.godown2);
 

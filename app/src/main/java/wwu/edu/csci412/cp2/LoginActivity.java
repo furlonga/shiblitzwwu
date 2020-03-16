@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -230,6 +231,9 @@ public class LoginActivity extends AppCompatActivity {
 
     public void goToMain(){
         Intent myIntent = new Intent( this, MainActivity.class);
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
+        mp.setVolume(1.0f, 1.0f);
+        mp.start();
         this.overridePendingTransition(R.anim.leftright,
                 R.anim.rightleft);
         this.startActivity( myIntent );
