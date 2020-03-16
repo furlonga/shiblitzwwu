@@ -4,22 +4,34 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.google.gson.annotations.Expose;
+
 public class User {
+    @Expose
     private String email;
+    @Expose
     private String name;
 
+    @Expose
     private int xp;
+    @Expose
     private int levels;
+
+    private String seed;
 
     private static final String EMAIL = "email";
     private static final String NAME = "name";
     private static final String XP = "xp";
     private static final String LEVELS = "levels";
 
+    private static final String SEED = "seed";
+
     private static final String DEFAULT_EMAIL = "user@gmail.com";
     private static final String DEFAULT_NAME = "user";
     private static final int DEFAULT_XP = 1;
     private static final int DEFAULT_LEVELS = 1;
+
+    private static final String DEFAULT_SEED = "0|0|0";
 
 
 
@@ -35,6 +47,7 @@ public class User {
         setName(DEFAULT_NAME);
         setXp(DEFAULT_XP);
         setLevels(DEFAULT_LEVELS);
+        setSeed(DEFAULT_SEED);
     }
 
     public User(Context context) {
@@ -43,6 +56,7 @@ public class User {
         setName(pref.getString(NAME, DEFAULT_NAME));
         setXp(pref.getInt(XP, DEFAULT_XP));
         setLevels(pref.getInt(LEVELS, DEFAULT_LEVELS));
+        setSeed(pref.getString(SEED, DEFAULT_SEED));
     }
 
     public void setPreferences( Context context ) {
@@ -54,6 +68,7 @@ public class User {
         editor.putString(NAME, name);
         editor.putInt(XP, xp);
         editor.putInt(LEVELS, levels);
+        //editor.putString(SEEDS, seeds);
 
         editor.commit();
     }
@@ -92,6 +107,14 @@ public class User {
         this.levels = levels;
     }
 
+
+    public String getSeed() {
+        return seed;
+    }
+    public void setSeed(String seed) {
+        this.seed = seed;
+    }
+
     public Parameter getEmailParameter() {
         return new Parameter("email", email);
     }
@@ -106,6 +129,12 @@ public class User {
     public Parameter getLevelsParameter() {
         return new Parameter("levels", Integer.toString(levels));
     }
+
+    public Parameter getSeedParamater() {
+        return new Parameter("seed", seed);
+    }
+
+
 
 
 }

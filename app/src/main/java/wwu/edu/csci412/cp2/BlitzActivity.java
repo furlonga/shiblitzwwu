@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.shiblitz.unity.UnityPlayerActivity;
 
 import java.util.ArrayList;
@@ -125,8 +126,14 @@ public class BlitzActivity extends AppCompatActivity {
 
         user.setPreferences(this); */
         Seed[] seeds = gson.fromJson(res, Seed[].class);
-        Log.d("seed0", Float.toString(seeds[0].getLight()));
+        User user = LoginActivity.user;
 
+        if (seeds.length > 0 ){
+            user.setSeed(seeds[0].getLight() + "|" + seeds[0].getPressure() + "|" + seeds[0].getTemperature());
+        } else {
+            user.setSeed("0|0|0");
+        }
+        user.setPreferences(this);
     }
 
     //Go to the Unity project
