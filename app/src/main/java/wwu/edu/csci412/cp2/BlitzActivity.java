@@ -20,7 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.shiblitz.unity.UnityPlayerActivity;
+
+import java.util.ArrayList;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -38,7 +41,11 @@ public class BlitzActivity extends AppCompatActivity {
     IMyService iMyService;
     Gson gson;
 
+<<<<<<< HEAD
+    //public static ArrayList<Seed> seeds = new ArrayList<>();
+=======
     public Seed[] seeds;
+>>>>>>> b3c25d0a624a166252c08500632dd9e77392611b
 
 
     @Override
@@ -84,16 +91,26 @@ public class BlitzActivity extends AppCompatActivity {
         progressBar.setProgress(Integer.parseInt(xp.getValue()) * 10);
 
 
+<<<<<<< HEAD
+        compositeDisposable.add(iMyService.getSeeds(user.getEmail())
+=======
 
         compositeDisposable.add(iMyService.getSeeds(user.getEmail())
 
+>>>>>>> b3c25d0a624a166252c08500632dd9e77392611b
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<String>() {
                                    @Override
                                    public void onNext(String res) {
+<<<<<<< HEAD
+                                       Toast.makeText(BlitzActivity.this, res, Toast.LENGTH_SHORT).show();
+                                       Log.d("here", res);
+                                        updateSeedList(res);
+=======
                                        Log.d("here", res);
                                        updateSeedList(res);
+>>>>>>> b3c25d0a624a166252c08500632dd9e77392611b
                                    }
 
                                    @Override
@@ -104,30 +121,55 @@ public class BlitzActivity extends AppCompatActivity {
 
                                    @Override
                                    public void onComplete() {
+<<<<<<< HEAD
+
+=======
                                        TextView seedView = findViewById(R.id.seed_view);
                                        seedView.setText("Seeds: " + seeds.length);
                                        Log.d("SEED LENGTH",Integer.toString( seeds.length));
                                        Log.d("SEED 0", Float.toString(seeds[0].getTemperature()));
+>>>>>>> b3c25d0a624a166252c08500632dd9e77392611b
                                    }
                                }
                 ));
 
 
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> b3c25d0a624a166252c08500632dd9e77392611b
     }
 
 
     public void updateSeedList(String res) {
         /*User userOverwrite = gson.fromJson(res, User.class);
+<<<<<<< HEAD
+
+=======
+>>>>>>> b3c25d0a624a166252c08500632dd9e77392611b
         user.setEmail(userOverwrite.getEmail());
         user.setName(userOverwrite.getName());
         user.setLevels(userOverwrite.getLevels());
         user.setXp(userOverwrite.getXp());
+<<<<<<< HEAD
+
+        user.setPreferences(this); */
+        Seed[] seeds = gson.fromJson(res, Seed[].class);
+        User user = LoginActivity.user;
+
+        if (seeds.length > 0 ){
+            user.setSeed(seeds[0].getLight() + "|" + seeds[0].getPressure() + "|" + seeds[0].getTemperature());
+        } else {
+            user.setSeed("0|0|0");
+        }
+        user.setPreferences(this);
+=======
         user.setPreferences(this); */
         seeds = gson.fromJson(res, Seed[].class);
         Log.d("seed0", Float.toString(seeds[0].getLight()));
 
+>>>>>>> b3c25d0a624a166252c08500632dd9e77392611b
     }
 
     //Go to the Unity project

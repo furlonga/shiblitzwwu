@@ -51,7 +51,7 @@ router.post("/users/login", async (req, res) => {
 });
 
 router.post("/users/modify", async (req, res) => {
-  // Modify user levels and xp
+  // Modify user levels and xp and seeds
   try {
     console.log("users/modify endpoint");
     var email = req.body.email;
@@ -94,6 +94,26 @@ router.get("/users/:email", async (req, res) => {
     }
     console.log(user);
     res.send(user);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+
+});
+
+router.get("/users/seeds/:email", async (req, res) => {
+  // View logged in user profile's seed
+  try {
+    console.log("users/seeds endpoint");
+    var email = req.param("email");
+    console.log(email);
+    const user = await User.findByEmail(email);
+    if (!user) {
+      return res.status(400).send({
+        error: "Invalid Email"
+      });
+    }
+    console.log(user);
+    res.send(user.seeds);
   } catch (error) {
     res.status(400).send(error);
   }

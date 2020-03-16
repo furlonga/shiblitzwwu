@@ -219,6 +219,7 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
                         lm.requestLocationUpdates(provider, 400, 1, this);
                     }
                 } else {
+                    goback();
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
                 }
@@ -372,6 +373,10 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
         this.overridePendingTransition(R.anim.godown,
                 R.anim.godown2);
 
+    }
+
+    public void goback() {
+        this.finish();
     }
 }
 

@@ -209,6 +209,8 @@ public class LoginActivity extends AppCompatActivity {
         user.setName(userOverwrite.getName());
         user.setLevels(userOverwrite.getLevels());
         user.setXp(userOverwrite.getXp());
+        //user.setSeeds(userOverwrite.getSeeds());
+        //Log.d("seeds", Float.toString(userOverwrite.getSeeds()[0].getLight()));
 
         user.setPreferences(this);
 
