@@ -128,7 +128,7 @@ public class BlitzActivity extends AppCompatActivity {
         user.setXp(userOverwrite.getXp());
 
         user.setPreferences(this); */
-        Seed[] seeds = gson.fromJson(res, Seed[].class);
+        seeds = gson.fromJson(res, Seed[].class);
         User user = LoginActivity.user;
 
         if (seeds.length > 0 ){
