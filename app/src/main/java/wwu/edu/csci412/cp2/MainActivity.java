@@ -27,9 +27,5 @@ public class MainActivity extends AppCompatActivity {
                 R.anim.rightleft);
     }
 
-    public void quit(View v){
-        this.finish();
-        System.exit(0);
-    }
 
 }
