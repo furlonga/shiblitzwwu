@@ -96,7 +96,6 @@ public class BlitzActivity extends AppCompatActivity {
                 .subscribeWith(new DisposableObserver<String>() {
                                    @Override
                                    public void onNext(String res) {
-                                       Toast.makeText(BlitzActivity.this, res, Toast.LENGTH_SHORT).show();
                                        Log.d("here", res);
                                        updateSeedList(res);
                                    }
@@ -109,7 +108,8 @@ public class BlitzActivity extends AppCompatActivity {
 
                                    @Override
                                    public void onComplete() {
-
+                                        TextView seedView = findViewById(R.id.seed_view);
+                                        seedView.setText("Seeds: " + seeds.length);
                                    }
                                }
                 ));
