@@ -1,3 +1,4 @@
+
 package wwu.edu.csci412.cp2.Retrofit;
 
 import com.google.gson.JsonObject;
@@ -39,3 +40,4 @@ public interface IMyService {
             @Path("email") String email
     );
 }
+
