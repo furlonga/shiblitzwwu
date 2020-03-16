@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.preference.PreferenceManager;
@@ -41,6 +42,7 @@ public class BlitzActivity extends AppCompatActivity {
     IMyService iMyService;
     Gson gson;
 
+    public static User user;
     //public static ArrayList<Seed> seeds = new ArrayList<>();
     public Seed[] seeds;
 
@@ -49,7 +51,7 @@ public class BlitzActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gson = new Gson();
-
+        user = LoginActivity.user;
         //Init Services
         Retrofit retrofitClient = RetrofitClient.getInstance();
         iMyService = retrofitClient.create(IMyService.class);
@@ -72,49 +74,49 @@ public class BlitzActivity extends AppCompatActivity {
         TextView emailView = findViewById(R.id.emailView);
         ProgressBar progressBar = findViewById(R.id.progressBar);
 
-        User user = LoginActivity.user;
-        Parameter email = user.getEmailParameter();
-        Parameter name = user.getNameParameter();
-        Parameter xp = user.getXpParameter();
-        Parameter levels = user.getLevelsParameter();
 
-        levelView.setText("Level: "+ levels.getValue());
-        emailView.setText("Email: "+ email.getValue());
-        int level = Integer.parseInt(levels.getValue());
-        manaView.setText("Mana: " + Integer.toString(10 + level));
-        agilityView.setText("Agility: "+ Integer.toString(10 + level));
-        healthView.setText("Health: " + Integer.toString(10 + level));
+        if(user != null){
+            Parameter email = user.getEmailParameter();
+            Parameter name = user.getNameParameter();
+            Parameter xp = user.getXpParameter();
+            Parameter levels = user.getLevelsParameter();
 
-        progressBar.setProgress(Integer.parseInt(xp.getValue()) * 10);
+            levelView.setText("Level: "+ levels.getValue());
+            emailView.setText("Email: "+ email.getValue());
+            int level = Integer.parseInt(levels.getValue());
+            manaView.setText("Mana: " + Integer.toString(10 + level));
+            agilityView.setText("Agility: "+ Integer.toString(10 + level));
+            healthView.setText("Health: " + Integer.toString(10 + level));
+
+            progressBar.setProgress(Integer.parseInt(xp.getValue()) * 10);
 
 
 
+            compositeDisposable.add(iMyService.getSeeds(user.getEmail())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(new DisposableObserver<String>() {
+                                       @Override
+                                       public void onNext(String res) {
+                                           Log.d("here", res);
+                                           updateSeedList(res);
+                                       }
 
-        compositeDisposable.add(iMyService.getSeeds(user.getEmail())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<String>() {
-                                   @Override
-                                   public void onNext(String res) {
-                                       Toast.makeText(BlitzActivity.this, res, Toast.LENGTH_SHORT).show();
-                                       Log.d("here", res);
-                                       updateSeedList(res);
+                                       @Override
+                                       public void onError(Throwable e) {
+                                           Toast.makeText(BlitzActivity.this, ""+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+
+                                       }
+
+                                       @Override
+                                       public void onComplete() {
+                                           TextView seedView = findViewById(R.id.seed_view);
+                                           seedView.setText("Seeds: " + seeds.length);
+                                       }
                                    }
+                    ));
 
-                                   @Override
-                                   public void onError(Throwable e) {
-                                       Toast.makeText(BlitzActivity.this, ""+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-
-                                   }
-
-                                   @Override
-                                   public void onComplete() {
-
-                                   }
-                               }
-                ));
-
-
+        }
 
 
     }
@@ -128,7 +130,7 @@ public class BlitzActivity extends AppCompatActivity {
         user.setXp(userOverwrite.getXp());
 
         user.setPreferences(this); */
-        Seed[] seeds = gson.fromJson(res, Seed[].class);
+        seeds = gson.fromJson(res, Seed[].class);
         User user = LoginActivity.user;
 
         if (seeds.length > 0 ){
@@ -146,6 +148,9 @@ public class BlitzActivity extends AppCompatActivity {
 
     //Go to the Unity project
     public void goToMenu(View v){
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
+        mp.setVolume(1.0f, 1.0f);
+        mp.start();
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
     }
@@ -154,35 +159,9 @@ public class BlitzActivity extends AppCompatActivity {
 
     //Go to the Unity project
     public void goToUnity(View v){
-        /*
-        Intent intent = new Intent(this, UnityPlayerActivity.class);
-        //Pass initial parameters to unity
-        User user = LoginActivity.user;
-        Parameter email = user.getEmailParameter();
-        Parameter name = user.getNameParameter();
-        Parameter xp = user.getXpParameter();
-        Parameter levels = user.getLevelsParameter();
-
-        intent.putExtra(email.getId(), email.getValue());
-        intent.putExtra(name.getId(), name.getValue());
-        intent.putExtra(xp.getId(), xp.getValue());
-        intent.putExtra(levels.getId(),levels.getValue());
-
-
-        String sharedPreferenceName = this.getPackageName();
-
-        SharedPreferences sharedPreferences = getSharedPreferences(sharedPreferenceName, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.putString(email.getId(), email.getValue());
-        editor.putString(name.getId(), name.getValue());
-        editor.putString(xp.getId(), xp.getValue());
-        editor.putString(levels.getId(), levels.getValue());
-        //seeds[seeds.length - 1] = null;
-        Log.d("Intent value", xp.getValue());
-        editor.apply();
-        //startActivity(intent);
-          */
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.howl_1);
+        mp.setVolume(1.0f, 1.0f);
+        mp.start();
         Intent intent = new Intent(this, UnityActivity.class);
         startActivity(intent);
         this.overridePendingTransition(R.anim.godown, R.anim.godown2);
@@ -192,6 +171,9 @@ public class BlitzActivity extends AppCompatActivity {
     public void goBack(View v){
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
+        mp.setVolume(1.0f, 1.0f);
+        mp.start();
         this.overridePendingTransition(R.anim.goback,
                 R.anim.goback2);
 
