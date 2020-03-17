@@ -11,8 +11,11 @@ In Shiblitz, you play as a Shiba Inu on a quest to kill monsters. Current featur
 
 Cards:
 
-<img src="https://i.imgur.com/wAcW51A.png" alt="alt text" width="100"> <img src="https://i.imgur.com/G17rC8z.png" alt="alt text" width="100"> <img src="https://imgur.com/rji1JOZ" alt="alt text" width="100">
+<img src="https://i.imgur.com/wAcW51A.png" alt="alt text" width="100"> <img src="https://i.imgur.com/G17rC8z.png" alt="alt text" width="100"> <img src="https://i.imgur.com/rji1JOZ.png" alt="alt text" width="100">
 
 
 <img src="https://i.imgur.com/SWuutms.png" alt="alt text" width="100"> <img src="https://i.imgur.com/xh9Eu0N.png" alt="alt text" width="100"> <img src="https://i.imgur.com/s3tsEzh.png" alt="alt text" width="100">
+
+
+<img src="https://i.imgur.com/wONMNFc.png" alt="alt text" width="100"> <img src="https://i.imgur.com/nlcikFs.png" alt="alt text" width="100"> <img src="https://i.imgur.com/gWrDs66.png" alt="alt text" width="100">
 Contributors: Jacob Coffland, Kevin Doan, Albert Furlong, Trevor Yokoyama
