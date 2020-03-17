@@ -165,10 +165,6 @@ public class BlitzActivity extends AppCompatActivity {
         }
         user.setPreferences(this);
 
-        user.setPreferences(this);
-        seeds = gson.fromJson(res, Seed[].class);
-        Log.d("seed0", Float.toString(seeds[0].getLight()));
-
     }
 
     //Go to the Unity project
