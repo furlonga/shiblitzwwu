@@ -180,8 +180,8 @@ public class BlitzActivity extends AppCompatActivity {
 
     //Go to the Unity project
     public void goToUnity(View v){
-        LoginActivity.mp.stop();
-        LoginActivity.playing = 0;
+        //LoginActivity.mp.stop();
+        //LoginActivity.playing = 0;
         final MediaPlayer mp = MediaPlayer.create(this, R.raw.howl_1);
         mp.setVolume(1.0f, 1.0f);
         mp.start();

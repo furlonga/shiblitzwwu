@@ -54,11 +54,13 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
-
+        /*
         mp = MediaPlayer.create(this, R.raw.shiblitz_intro);
         mp.setVolume(1.0f, 1.0f);
         mp.setLooping(true);
         mp.start();
+
+        */
         gson = new Gson();
 
         user = new User(this);
