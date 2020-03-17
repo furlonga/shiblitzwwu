@@ -43,7 +43,6 @@ public class BlitzActivity extends AppCompatActivity {
     Gson gson;
 
     public static User user;
-    //public static ArrayList<Seed> seeds = new ArrayList<>();
     public Seed[] seeds;
 
 
@@ -51,8 +50,9 @@ public class BlitzActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gson = new Gson();
-        user = LoginActivity.user;
+        user = new User(this);
         //Init Services
+
         Retrofit retrofitClient = RetrofitClient.getInstance();
         iMyService = retrofitClient.create(IMyService.class);
 
@@ -61,12 +61,37 @@ public class BlitzActivity extends AppCompatActivity {
         updateView();
 
 
+        compositeDisposable.add(iMyService.getSeeds(user.getEmail())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<String>() {
+                                   @Override
+                                   public void onNext(String res) {
+                                       Log.d("here", res);
+                                       updateSeedList(res);
+                                   }
+
+                                   @Override
+                                   public void onError(Throwable e) {
+                                       Toast.makeText(BlitzActivity.this, ""+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+
+                                   }
+
+                                   @Override
+                                   public void onComplete() {
+                                       TextView seedView = findViewById(R.id.seed_view);
+                                       seedView.setText("Seeds: " + seeds.length);
+                                   }
+                               }
+                ));
+
 
     }
 
 
 
     public void updateView(){
+        //update all text view and progress bar in this activity
         TextView levelView = findViewById(R.id.levelView);
         TextView healthView = findViewById(R.id.healthView);
         TextView manaView = findViewById(R.id.manaView);
@@ -74,64 +99,27 @@ public class BlitzActivity extends AppCompatActivity {
         TextView emailView = findViewById(R.id.emailView);
         ProgressBar progressBar = findViewById(R.id.progressBar);
 
+        //user = new User(this);
+        Parameter email = user.getEmailParameter();
+        Parameter name = user.getNameParameter();
+        Parameter xp = user.getXpParameter();
+        Parameter levels = user.getLevelsParameter();
 
-        if(user != null){
-            Parameter email = user.getEmailParameter();
-            Parameter name = user.getNameParameter();
-            Parameter xp = user.getXpParameter();
-            Parameter levels = user.getLevelsParameter();
+        levelView.setText("Level: "+ levels.getValue());
+        emailView.setText("Email: "+ email.getValue());
+        int level = Integer.parseInt(levels.getValue());
+        manaView.setText("Mana: " + Integer.toString(10 + level));
+        agilityView.setText("Agility: "+ Integer.toString(10 + level));
+        healthView.setText("Health: " + Integer.toString(10 + level));
 
-            levelView.setText("Level: "+ levels.getValue());
-            emailView.setText("Email: "+ email.getValue());
-            int level = Integer.parseInt(levels.getValue());
-            manaView.setText("Mana: " + Integer.toString(10 + level));
-            agilityView.setText("Agility: "+ Integer.toString(10 + level));
-            healthView.setText("Health: " + Integer.toString(10 + level));
-
-            progressBar.setProgress(Integer.parseInt(xp.getValue()) * 10);
-
-
-
-            compositeDisposable.add(iMyService.getSeeds(user.getEmail())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeWith(new DisposableObserver<String>() {
-                                       @Override
-                                       public void onNext(String res) {
-                                           Log.d("here", res);
-                                           updateSeedList(res);
-                                       }
-
-                                       @Override
-                                       public void onError(Throwable e) {
-                                           Toast.makeText(BlitzActivity.this, ""+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-
-                                       }
-
-                                       @Override
-                                       public void onComplete() {
-                                           TextView seedView = findViewById(R.id.seed_view);
-                                           seedView.setText("Seeds: " + seeds.length);
-                                       }
-                                   }
-                    ));
-
-        }
-
+        progressBar.setProgress(Integer.parseInt(xp.getValue()) * 10);
 
     }
 
 
     public void updateSeedList(String res) {
-        /*User userOverwrite = gson.fromJson(res, User.class);
-        user.setEmail(userOverwrite.getEmail());
-        user.setName(userOverwrite.getName());
-        user.setLevels(userOverwrite.getLevels());
-        user.setXp(userOverwrite.getXp());
-
-        user.setPreferences(this); */
+        //receive seed list's response and udpate
         seeds = gson.fromJson(res, Seed[].class);
-        User user = LoginActivity.user;
 
         if (seeds.length > 0 ){
             user.setSeed(seeds[0].getLight() + "|" + seeds[0].getPressure() + "|" + seeds[0].getTemperature());
