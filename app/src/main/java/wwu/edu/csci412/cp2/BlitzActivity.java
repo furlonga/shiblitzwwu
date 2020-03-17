@@ -91,6 +91,50 @@ public class BlitzActivity extends AppCompatActivity {
 
 
     public void updateView(){
+        compositeDisposable.add(iMyService.getInfo(user.getEmail())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<String>() {
+                                   @Override
+                                   public void onNext(String res) {
+                                        updateInfo(res);
+                                   }
+
+                                   @Override
+                                   public void onError(Throwable e) {
+                                       //Toast.makeText(BlitzActivity.this, ""+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+
+                                   }
+
+                                   @Override
+                                   public void onComplete() {
+                                       //update all text view and progress bar in this activity
+                                       TextView levelView = findViewById(R.id.levelView);
+                                       TextView healthView = findViewById(R.id.healthView);
+                                       TextView manaView = findViewById(R.id.manaView);
+                                       TextView agilityView = findViewById(R.id.agilityView);
+                                       TextView emailView = findViewById(R.id.emailView);
+                                       ProgressBar progressBar = findViewById(R.id.progressBar);
+
+                                       //user = new User(this);
+                                       Parameter email = user.getEmailParameter();
+                                       Parameter name = user.getNameParameter();
+                                       Parameter xp = user.getXpParameter();
+                                       Parameter levels = user.getLevelsParameter();
+
+                                       levelView.setText("Level: "+ levels.getValue());
+                                       emailView.setText("Email: "+ email.getValue());
+                                       int level = Integer.parseInt(levels.getValue());
+                                       manaView.setText("Mana: " + Integer.toString(10 + level));
+                                       agilityView.setText("Agility: "+ Integer.toString(10 + level));
+                                       healthView.setText("Health: " + Integer.toString(10 + level));
+
+                                       progressBar.setProgress(Integer.parseInt(xp.getValue()) * 10);
+                                   }
+                               }
+                ));
+
+/*
         //update all text view and progress bar in this activity
         TextView levelView = findViewById(R.id.levelView);
         TextView healthView = findViewById(R.id.healthView);
@@ -114,8 +158,26 @@ public class BlitzActivity extends AppCompatActivity {
 
         progressBar.setProgress(Integer.parseInt(xp.getValue()) * 10);
 
+ */
+
     }
 
+
+    @Override
+    protected void onStop() {
+        compositeDisposable.clear();
+        super.onStop();
+    }
+
+    public void updateInfo(String res) {
+        User userOverwrite = gson.fromJson(res, User.class);
+
+
+        user.setLevels(userOverwrite.getLevels());
+        user.setXp(userOverwrite.getXp());
+
+        user.setPreferences(this);
+    }
 
     public void updateSeedList(String res) {
         //receive seed list's response and udpate
