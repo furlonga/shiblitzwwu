@@ -17,8 +17,8 @@ Cantrips are able to be cast faster than other spells, and do not end your turn.
 ##### Magic Spells
 Magic spells are the most powerful weapons ion your arsenal. They end your turn, but have great effects. Watch out for fireball!
 
-<img src="https://i.imgur.com/wONMNFc.png" alt="alt text" width="100"> <img src="https://i.imgur.com/nlcikFs.png" alt="alt text" width="100"> <img src="https://i.imgur.com/gWrDs66.png" alt="alt text" width="100">
+<img src="https://i.imgur.com/wONMNFc.png" alt="alt text" width="100"> <img src="https://i.imgur.com/nlcikFs.png" alt="alt text" width="100"> <img src="https://i.imgur.com/gWrDs66.png" alt="alt text" width="100"> <img src="https://i.imgur.com/vuHbk0y.png" alt="alt text" width="100">
 #### Melee Weapons
-Reusable melee strikes.
+Reusable melee strikes and movement spells. The bread and butter of any mercenary shiba.
 
 Contributors: Jacob Coffland, Kevin Doan, Albert Furlong, Trevor Yokoyama
