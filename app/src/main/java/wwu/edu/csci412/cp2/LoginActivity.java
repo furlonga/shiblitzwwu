@@ -40,7 +40,8 @@ public class LoginActivity extends AppCompatActivity {
     IMyService iMyService;
 
     public static User user;
-
+    public static MediaPlayer mp;
+    public static int playing = 1;
     Gson gson;
 
     @Override
@@ -54,6 +55,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
 
+        mp = MediaPlayer.create(this, R.raw.shiblitz_intro);
+        mp.setVolume(1.0f, 1.0f);
+        mp.setLooping(true);
+        mp.start();
         gson = new Gson();
 
         user = new User(this);
@@ -176,11 +181,11 @@ public class LoginActivity extends AppCompatActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<String>() {
-                    @Override
-                    public void onNext(String res) {
-                        Toast.makeText(LoginActivity.this, "Successful Login", Toast.LENGTH_SHORT).show();
-                        //User temp = writeObj(res);
-                        updateUserObject(res);
+                                   @Override
+                                   public void onNext(String res) {
+                                       Toast.makeText(LoginActivity.this, "Successful Login", Toast.LENGTH_SHORT).show();
+                                       //User temp = writeObj(res);
+                                       updateUserObject(res);
                         /*
                         Log.d("temp",temp.getEmail().getValue());
                         Log.d("temp",temp.getName().getValue());
@@ -189,17 +194,17 @@ public class LoginActivity extends AppCompatActivity {
 
                          */
 
-                    }
-                    @Override
-                    public void onError(Throwable e) {
-                        Toast.makeText(LoginActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                    @Override
-                    public void onComplete() {
-                        goToMain();
-                    }
-                }
-        ));
+                                   }
+                                   @Override
+                                   public void onError(Throwable e) {
+                                       Toast.makeText(LoginActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                   }
+                                   @Override
+                                   public void onComplete() {
+                                       goToMain();
+                                   }
+                               }
+                ));
 
     }
 
@@ -231,9 +236,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void goToMain(){
         Intent myIntent = new Intent( this, MainActivity.class);
-        final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
-        mp.setVolume(1.0f, 1.0f);
-        mp.start();
+
         this.overridePendingTransition(R.anim.leftright,
                 R.anim.rightleft);
         this.startActivity( myIntent );
