@@ -17,7 +17,7 @@ Shiblitz is a rogue like dungeon crawler that uses your real world position to g
 
 In Shiblitz, you play as a Shiba Inu on a quest to kill monsters. Current features include GPS location, OSM integration, Sensor based map generation, Graphics/Sounds/Animations, Database, and moves selected from a shuffled deck of cards.
 
-During the research stage of our project, here are the eight app we analyze:
+During the research stage of our project, we analyzed the following eight apps.
 [Turf Wars](https://turfwarsapp.com/)
 [Pokemon Go](https://www.pokemongo.com/en-us/)
 [Tourality](htttp://www.tourality.com/)
@@ -32,15 +32,18 @@ Our main design goals for the final project involved simplifying and streamlinin
 ### App Evolution
 V1:
 Started on the GUI of many screens and started on the back-end server. Started a unity tile app that could be run from the app.
+
 <img src="https://imgur.com/BGfWKXX.png">
 
 V2: Our GUI screens are now connected and animations will be played between screens. Login feature, and seed generation have been mostly implemented.
 Started on AI pathfinding and dungeon generation.
 
 V3: GUI fully implemented and styled consistently. Message passing between android studio and database and unity mostly implemented. AI pathfinding and randomly generated dungeon implemented.
+
 <img src="https://imgur.com/HOvUc3m.png">
 
 V4:  Animations between screens fully finished. Database server containing character information are mostly implemented. Messaging between Android and database completed. Equipment Screen and preliminary seed claimation finished.
+
 <img src="https://imgur.com/XOPp5jW.png"> 
 
 V5: Finish data passing. Finish gameplay mechanics in-scope.
@@ -75,5 +78,5 @@ This is a game with high lethality. You can not sprint from room to room and mow
 
 ## Future work
 **
-We want to implement and polish game mechanics along with more interactive gameplay. The leveling system could be reforumlated to be more in-depth. There could also be more work done with regard to having the map's location and sensor have more impact on dungeon generation. Through these improvement, we can get more people interested in the game.
+We want to implement and polish game mechanics along with more interactive gameplay. The leveling system could be reforumlated to be more in-depth. There could also be more work done with regard to having the map's location and sensor's impact on dungeon generation. Through these improvements, we can get more people interested in the game.
 
