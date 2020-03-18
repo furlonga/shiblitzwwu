@@ -32,7 +32,7 @@ Our main design goals for the final project involved simplifying and streamlinin
 ### App Evolution
 V1:
 Started on the GUI of many screens and started on the back-end server. Started a unity tile app that could be run from the app.
-<img src="https://imgur.com/BGfWKXX.png" alt ="a" width="100">
+<img src="https://imgur.com/BGfWKXX.png">
 
 V2: Our GUI screens are now connected and animations will be played between screens. Login feature, and seed generation have been mostly implemented.
 Started on AI pathfinding and dungeon generation.
