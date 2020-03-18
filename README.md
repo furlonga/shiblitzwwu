@@ -75,5 +75,5 @@ This is a game with high lethality. You can not sprint from room to room and mow
 
 ## Future work
 **
-More polish game mechanics. More in-depth leveling and dungeon generation.
+We want to implement and polish game mechanics along with more interactive gameplay. The leveling system could be reforumlated to be more in-depth. There could also be more work done with regard to having the map's location and sensor have more impact on dungeon generation. Through these improvement, we can get more people interested in the game.
 
