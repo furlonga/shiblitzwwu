@@ -5,7 +5,7 @@
 #### Contributors: 
 Jacob Coffland [cofflaj@wwu.edu]
 Kevin Doan [doanm3@wwu.edu]
-Trevor Yokoyama [trevor]
+Trevor Yokoyama [Yokoyat2@wwu.edu]
 Albert Furlong [Furlona@wwu.edu]
 
 #### CS412 Winter 2020, Professor Admed
