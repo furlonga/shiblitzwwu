@@ -3,11 +3,11 @@
 
 
 #### Contributors: 
-Jacob Coffland [cofflaj@wwu.edu]
-Kevin Doan [doanm3@wwu.edu]
-Trevor Yokoyama [Yokoyat2@wwu.edu]
+Jacob Coffland [cofflaj@wwu.edu]<br/>
+Kevin Doan [doanm3@wwu.edu]<br/>
+Trevor Yokoyama [Yokoyat2@wwu.edu]<br/>
 Albert Furlong [Furlona@wwu.edu]
-
+<br/>
 #### CS412 Winter 2020, Professor Admed
 
 Shiblitz is a rogue like dungeon crawler that uses your real world position to generate new dungeons and enemy locations. The game is intended to feel like endgame chess, with a focus on fast make or break decisions.
@@ -17,15 +17,15 @@ Shiblitz is a rogue like dungeon crawler that uses your real world position to g
 
 In Shiblitz, you play as a Shiba Inu on a quest to kill monsters. Current features include GPS location, OSM integration, Sensor based map generation, Graphics/Sounds/Animations, Database, and moves selected from a shuffled deck of cards.
 
-During the research stage of our project, we analyzed the following eight apps.
-[Turf Wars](https://turfwarsapp.com/)
-[Pokemon Go](https://www.pokemongo.com/en-us/)
-[Tourality](htttp://www.tourality.com/)
-[Ingress Prime](https://play.google.com/store/apps/details?id=com.nianticproject.ingress&hl=en​)
-[Resources](​https://play.google.com/store/apps/details?id=ch.pala.resources​)
-[Spec Trek](https://play.google.com/store/apps/details?id=com.spectrekking.full&hl=en)
-[The Great Land Grab](http://thegreatlandgrab.com/)
-[DominAnt](https://play.google.com/store/apps/details?id=eu.melkersson.antdomination&hl=en​)
+During the research stage of our project, we analyzed the following eight apps:<br/>
+[Turf Wars](https://turfwarsapp.com/)<br/>
+[Pokemon Go](https://www.pokemongo.com/en-us/)<br/>
+[Tourality](htttp://www.tourality.com/)<br/>
+[Ingress Prime](https://play.google.com/store/apps/details?id=com.nianticproject.ingress&hl=en​)<br/>
+[Resources](​https://play.google.com/store/apps/details?id=ch.pala.resources​)<br/>
+[Spec Trek](https://play.google.com/store/apps/details?id=com.spectrekking.full&hl=en)<br/>
+[The Great Land Grab](http://thegreatlandgrab.com/)<br/>
+[DominAnt](https://play.google.com/store/apps/details?id=eu.melkersson.antdomination&hl=en​)<br/>
 
 Our main design goals for the final project involved simplifying and streamlining the design so that the game is both approachable and easy to understand. The scope was narrowed in order to focus in on the gameplay aspect of our app. The main goal for the app is to promote healthy physical habits through incentivizing with entertainment. Therefore, through the reward of appealing and fun gameplay, the user will want to continue hiking. In essence, the final project is meant to highlight our team efforts to keep user focus on the gameplay's mechanics through minimizing the uniportant aspects.
 
@@ -48,9 +48,51 @@ V4:  Animations between screens fully finished. Database server containing chara
 
 V5: Finish data passing. Finish gameplay mechanics in-scope.
 
-## Final Product
-#### MVC Architecture:
-**
+## Final Product:
+Criteria Fufilled:
+- Sensors<br/>
+- Google Maps<br/>
+- Animations<br/>
+- Sound/Music<br/>
+- GPS<br/>
+
+Summary: <br/>
+The Shitblitz app is composed of 3 different parts. The MongoDB database, the Android Studio GUI and the Unity Game. Each of these 3 components work together to provide a entertaining and reliable system that is built to motivate the user to explore their local hikes and enviorment. The database allows for unique player profiles which will track their progress through the Unity game as well as their hikes that they have finished through the use of the Seed function of the Shiblitz App.
+
+## MVC Architecture:
+
+Model Files:<br/>
+- Peak.java<br/>
+- Seed.java<br/>
+- User.java <br/>
+- Parameter.java<br/>
+- Player.java <br/>
+    
+Summary:<br/>
+    The model provides the integration of the GUI, Database and the Unity Project. These files serve to provide the user with the ability to store their progress both in hiking their local enviorments as well as their progress through the Unity Dungeons.
+
+View Files:<br/>
+- activity\_blitz.xml        
+- activity\_main.xml<br/>
+- activity\_mapactivity.xml  
+- activity\_menu.xml    
+- activity\_unity.xml   
+- login\_layout.xml   
+- register\_layout.xml<br/>
+
+Summary:<br/>
+    The Views serve to graphically show the user their progress through the app as well as in their hikes. The views control the GUI and button placement that allows the user to navigate the application. Furthermore, the View helps to display the user's in-game stats. Mainly the View serves as the main access point to each of the other components of the app. (The Database and Unity Game)
+
+Controller Files:<br/>
+- MainActivity.java<br/>
+- BlitzActivity.java<br/>
+- LoginActivity.java<br/>
+- MenuActivity.java<br/>
+- UnityActivity.java   
+- MapActivity.java<br/>   
+
+Summary:<br/>
+    The controller class allows the user navigate their way through the app. Through the available buttons and input fields, the user is able to navigate through the GUI. Furthermore, the user is able to quickly and clearly select the activity that they wish to utilize. These activities being either the Google Maps activity or the Unity Game activity. 
 
 #### Cards:
 <img src="https://i.imgur.com/wAcW51A.png" alt="alt text" width="100"> <img src="https://i.imgur.com/G17rC8z.png" alt="alt text" width="100"> <img src="https://i.imgur.com/rji1JOZ.png" alt="alt text" width="100">
