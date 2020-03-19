@@ -10,6 +10,8 @@ Albert Furlong [Furlona@wwu.edu]
 <br/>
 #### CS412 Winter 2020, Professor Admed
 
+#### Video: https://drive.google.com/file/d/18pXlGqwmBglvjwkeivUYE4XRfFFRDcS-/view?usp=sharing
+
 Shiblitz is a rogue like dungeon crawler that uses your real world position to generate new dungeons and enemy locations. The game is intended to feel like endgame chess, with a focus on fast make or break decisions.
 
 <img src="https://i.imgur.com/7tLI5tR.png" alt="alt text" width="100"> <img src="https://i.imgur.com/fDy9ZY8.png" alt="alt text" width="100"> <img src="https://i.imgur.com/akerTeE.png" alt="alt text" width="100"> <img src="https://i.imgur.com/hqnpd1o.png" alt="alt text" width="100">
